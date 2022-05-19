@@ -1,2 +1,2 @@
 README file OnlineGalaga
-and hello world!
+-This repository is going to store all the files required for the proyect
