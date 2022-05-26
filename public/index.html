@@ -21,6 +21,15 @@
       <button id="player-color">Change Color</button>
     </div>
   </div>
+  <div class="player-chat">
+    <div>
+      <label for="player-name">Chat Text</label>
+      <input id="player-chat-text" maxlength="30" type="text" />
+    </div>
+    <div>
+      <button id="player-chat-button">Send Chat</button>
+    </div>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -28,17 +37,18 @@
   <script>
     // NOTE - INCLUDE YOUR FIREBASE CONFIG HERE FOR ANYTHING TO WORK:
     const firebaseConfig = {
-      apiKey: "AIzaSyCmXl8u8Jt5_UH08-5nENQNQEMXPGys9kk",
-      authDomain: "ghostvallis.firebaseapp.com",
-      databaseURL: "https://ghostvallis-default-rtdb.firebaseio.com",
-      projectId: "ghostvallis",
-      storageBucket: "ghostvallis.appspot.com",
-      messagingSenderId: "845637151347",
-      appId: "1:845637151347:web:ad179ef5e70c257ec31806",
-      measurementId: "G-L2XPD49Z8K"
+      apiKey: "AIzaSyDZEZA3jrgGOLm8FWX5_lhsSMyB2PdLgic",
+      authDomain: "webdevproject-d58ee.firebaseapp.com",
+      databaseURL: "https://webdevproject-d58ee-default-rtdb.firebaseio.com",
+      projectId: "webdevproject-d58ee",
+      storageBucket: "webdevproject-d58ee.appspot.com",
+      messagingSenderId: "888983445603",
+      appId: "1:888983445603:web:c48b88964c3edfa6bd9856",
+      measurementId: "G-QZ8RJY8LSM"
     };
     firebase.initializeApp(firebaseConfig);
   </script>
+
 
   <script src="/KeyPressListener.js"></script>
   <script src="/app.js"></script>
