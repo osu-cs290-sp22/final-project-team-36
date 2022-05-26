@@ -64,3 +64,6 @@ node_modules/
 
 # dotenv environment variables file
 .env
+Deployment token.txt
+public/images/map.ase
+public/security-rules.txt
