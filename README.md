@@ -57,6 +57,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 ```
+## To-Do Features
+- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/7
+- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/8
+- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/9
+- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/10
+- [x] https://github.com/osu-cs290-sp22/final-project-team-36/issues/11 
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
