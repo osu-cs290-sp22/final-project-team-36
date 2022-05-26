@@ -6,9 +6,9 @@ name: Deploy to Google Firebase
 on:
   # Triggers the workflow on push or pull request events but only for the Master branch
   push:
-    branches: [ Master ]
+    branches: [ release-firebase ]
   pull_request:
-    branches: [ Master ]
+    branches: [ release-firebase ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
