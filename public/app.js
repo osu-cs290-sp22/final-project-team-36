@@ -180,12 +180,6 @@ function getRandomSafeSpot() {
       attemptGrabCoin(newX, newY);
     }
   }
-  function getChatBubbleElement(chat_text) {
-    const bubbleElement = document.createElement("div");
-    bubbleElement.classList.add("bubble", "bubble-bottom-left");
-    bubbleElement.innerText(chat_text);
-    return bubbleElement;
-  }
   function initGame() {
 
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))
@@ -207,7 +201,15 @@ function getRandomSafeSpot() {
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-color", characterState.color);
         el.setAttribute("data-direction", characterState.direction);
-        el.appendChild(getChatBubbleElement(characterState.chat_text));
+        let chatBubble = el.querySelector("#chat-bubble");
+        if (characterState.chat_text === ""){
+          chatBubble.style.display = "none";
+        } else {
+          // el.appendChild(getChatBubbleElement(characterState.chat_text));
+          chatBubble.style.display = "block";
+          chatBubble.innerText = characterState.chat_text;
+        }
+        
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -229,6 +231,7 @@ function getRandomSafeSpot() {
           <span class="Character_coins">0</span>
         </div>
         <div class="Character_you-arrow"></div>
+        <div id="chat-bubble" class="bubble bubble-bottom-left" style="display: none;"></div>
       `);
       playerElements[addedPlayer.id] = characterElement;
 
@@ -309,17 +312,29 @@ function getRandomSafeSpot() {
 
     //Update player chat bubble on button click
     playerChatButton.addEventListener("click", () => {
-      playerRef.update({
-        chat_text: playerChatInput.value
-      })
-      playerChatInput.value = "";
-      //Start chat timeout
-      startChat();
+      sendChat();
     })
 
+    playerChatInput.addEventListener("keypress", function(event) {
+      // If the user presses the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        playerChatButton.click();
+      }
+    });
     //Place my first coin
     placeCoin();
 
+  }
+  function sendChat(){
+    playerRef.update({
+      chat_text: playerChatInput.value
+    })
+    playerChatInput.value = "";
+    //Start chat timeout
+    startChat();
   }
 
   firebase.auth().onAuthStateChanged((user) => {
