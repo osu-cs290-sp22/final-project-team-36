@@ -58,11 +58,7 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 ```
 ## To-Do Features
-- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/7
-- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/8
-- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/9
-- [ ] https://github.com/osu-cs290-sp22/final-project-team-36/issues/10
-- [x] https://github.com/osu-cs290-sp22/final-project-team-36/issues/11 
+View [project issues](https://github.com/osu-cs290-sp22/final-project-team-36/issues)
 
 
 ## Contributing
