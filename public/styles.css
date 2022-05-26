@@ -15,9 +15,10 @@ html, body {
 
 .game-container { 
   position: relative;
+  bottom: 100px;
   width: 240px;
   height: 208px;
-  background: url(/images/map.png) no-repeat no-repeat;
+  background: url(./images/map.png) no-repeat no-repeat;
   transform: scale(3);
   image-rendering: pixelated;
 }
@@ -31,7 +32,32 @@ html, body {
   gap: 0.5em;
   align-items: flex-end
 }
-
+/* Player chat input styles */
+.player-chat {
+  position: relative;
+  top: 250px;
+  right: 200px;
+  width: 240px;
+  display: flex;
+  gap: 0.5em;
+  align-items: flex-end
+}
+input#player-chat-text {
+  outline: 0;
+  padding-left: 0.5em;
+  border: 3px solid #222034;
+  width: 300px;
+}
+button#player-chat-button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 18px;
+  height: 44px;
+  width: 100px;
+  border-radius: 4px;
+  outline: 0;
+}
+/* Player input style end */
 label {
   display: block;
   font-weight: bold;
@@ -52,7 +78,7 @@ input[type="text"] {
   padding-left: 0.5em;
   border: 3px solid #222034;
   width: 150px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 input[type="text"]:focus {
   border-color: #f000ff;
@@ -93,12 +119,12 @@ button:active {
   left: 5px;
   width: 7px;
   height: 5px;
-  background: url(/images/arrow.png) no-repeat no-repeat;
+  background: url(./images/arrow.png) no-repeat no-repeat;
 }
 .Character_sprite {
   overflow: hidden;
   top: -3px;
-  background: url(/images/characters.png);
+  background: url(./images/characters.png);
 }
 .Character[data-direction="right"] .Character_sprite {
   background-position-x: 16px;
@@ -119,7 +145,7 @@ button:active {
   background-position-y: -80px;
 }
 .Character_shadow {
-  background: url(/images/shadow.png) no-repeat no-repeat;
+  background: url(./images/shadow.png) no-repeat no-repeat;
 }
 
 .Character_name-container {
@@ -142,7 +168,7 @@ button:active {
 
 /* Coins */
 .Coin_sprite {
-  background: url(/images/coin.png) no-repeat no-repeat;
+  background: url(./images/coin.png) no-repeat no-repeat;
   animation: coinFloat 0.8s linear infinite alternate-reverse;
 }
 @keyframes coinFloat {
@@ -150,5 +176,34 @@ button:active {
   to { transform: translateY(5px) }
 }
 .Coin_shadow {
-  background: url(/images/coin-shadow.png) no-repeat no-repeat;
+  background: url(./images/coin-shadow.png) no-repeat no-repeat;
+}
+
+/* Chat bubble section */
+.bubble {
+  position: absolute;
+  font-size: 5px;
+  width: 200x;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2px;
+  text-align: center;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #000;
+  left: 14px;
+  bottom: 18px;
+}
+
+.bubble-bottom-left:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 5px solid #fff;
+  border-right: 3px solid transparent;
+  border-top: 1px solid #fff;
+  border-bottom: 5px solid transparent;
+  left: 2px;
+  bottom: -4px;
 }
