@@ -1,26 +1,26 @@
 const mapData = {
-  minX: 1,
-  maxX: 14,
+  minX: 2,
+  maxX: 26,
   minY: 4,
   maxY: 12,
   blockedSpaces: {
-    "7x4": true,
-    "1x11": true,
-    "12x10": true,
-    "4x7": true,
+    "2x4": true,
+    "5x10": true,
     "5x7": true,
-    "6x7": true,
-    "8x6": true,
-    "9x6": true,
-    "10x6": true,
-    "7x9": true,
-    "8x9": true,
-    "9x9": true,
+    "3x11": true,
+    "8x11": true,
+    "11x7": true,
+    "11x10": true,
+    "16x7": true,
+    "16x10": true,
+    "19x11": true,
+    "22x7": true,
+    "22x10": true,
+    "24x11": true,
+    "25x4": true
   },
 };
 
-// Options for Player Colors... these are in the same order as our sprite sheet
-const playerColors = ["blue", "red", "orange", "yellow", "green", "purple"];
 
 //Misc Helpers
 function randomFromArray(array) {
@@ -70,7 +70,7 @@ function createName() {
   return `${prefix} ${animal}`;
 }
 
-function isSolid(x,y) {
+function isSolid(x, y) {
 
   const blockedNextSpace = mapData.blockedSpaces[getKeyString(x, y)];
   return (
@@ -85,23 +85,36 @@ function isSolid(x,y) {
 function getRandomSafeSpot() {
   //We don't look things up by key here, so just return an x/y
   return randomFromArray([
-    { x: 1, y: 4 },
-    { x: 2, y: 4 },
-    { x: 1, y: 5 },
     { x: 2, y: 6 },
-    { x: 2, y: 8 },
     { x: 2, y: 9 },
     { x: 4, y: 8 },
     { x: 5, y: 5 },
     { x: 5, y: 8 },
-    { x: 5, y: 10 },
     { x: 5, y: 11 },
-    { x: 11, y: 7 },
     { x: 12, y: 7 },
+    { x: 12, y: 11 },
+    { x: 16, y: 11 },
+    { x: 18, y: 9 },
+    { x: 19, y: 10 },
+    { x: 21, y: 5 },
+    { x: 25, y: 8 },
+    { x: 19, y: 7 },
     { x: 13, y: 7 },
     { x: 13, y: 6 },
     { x: 13, y: 8 },
+    { x: 16, y: 8 },
+    { x: 16, y: 6 },
+    { x: 17, y: 6 },
+    { x: 21, y: 6 },
     { x: 7, y: 6 },
+    { x: 14, y: 4 },
+    { x: 19, y: 4 },
+    { x: 23, y: 4 },
+    { x: 24, y: 9 },
+    { x: 22, y: 11 },
+    { x: 24, y: 6 },
+    { x: 14, y: 9 },
+    { x: 21, y: 8 },
     { x: 7, y: 7 },
     { x: 7, y: 8 },
     { x: 8, y: 8 },
@@ -123,7 +136,10 @@ function getRandomSafeSpot() {
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
-  const playerColorButton = document.querySelector("#player-color");
+  const playerNameButton = document.querySelector("#player-name-button");
+  // Chat Input & Button
+  const playerChatInput = document.querySelector("#player-chat-text");
+  const playerChatButton = document.querySelector("#player-chat-button");
 
 
   function placeCoin() {
@@ -140,6 +156,14 @@ function getRandomSafeSpot() {
     }, randomFromArray(coinTimeouts));
   }
 
+  function startChat() {
+    setTimeout(() => {
+      playerRef.update({
+        chat_text: ""
+      })
+    }, 8000);
+  }
+
   function attemptGrabCoin(x, y) {
     const key = getKeyString(x, y);
     if (coins[key]) {
@@ -152,7 +176,7 @@ function getRandomSafeSpot() {
   }
 
 
-  function handleArrowPress(xChange=0, yChange=0) {
+  function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
     if (!isSolid(newX, newY)) {
@@ -169,7 +193,6 @@ function getRandomSafeSpot() {
       attemptGrabCoin(newX, newY);
     }
   }
-
   function initGame() {
 
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))
@@ -189,8 +212,16 @@ function getRandomSafeSpot() {
         // Now update the DOM
         el.querySelector(".Character_name").innerText = characterState.name;
         el.querySelector(".Character_coins").innerText = characterState.coins;
-        el.setAttribute("data-color", characterState.color);
         el.setAttribute("data-direction", characterState.direction);
+        let chatBubble = el.querySelector("#chat-bubble");
+        if (characterState.chat_text === ""){
+          chatBubble.style.display = "none";
+        } else {
+          // el.appendChild(getChatBubbleElement(characterState.chat_text));
+          chatBubble.style.display = "block";
+          chatBubble.innerText = characterState.chat_text;
+        }
+        
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -212,13 +243,13 @@ function getRandomSafeSpot() {
           <span class="Character_coins">0</span>
         </div>
         <div class="Character_you-arrow"></div>
+        <div id="chat-bubble" class="bubble bubble-bottom-left" style="display: none;"></div>
       `);
       playerElements[addedPlayer.id] = characterElement;
 
       //Fill in some initial state
       characterElement.querySelector(".Character_name").innerText = addedPlayer.name;
       characterElement.querySelector(".Character_coins").innerText = addedPlayer.coins;
-      characterElement.setAttribute("data-color", addedPlayer.color);
       characterElement.setAttribute("data-direction", addedPlayer.direction);
       const left = 16 * addedPlayer.x + "px";
       const top = 16 * addedPlayer.y - 4 + "px";
@@ -265,9 +296,9 @@ function getRandomSafeSpot() {
       gameContainer.appendChild(coinElement);
     })
     allCoinsRef.on("child_removed", (snapshot) => {
-      const {x,y} = snapshot.val();
-      const keyToRemove = getKeyString(x,y);
-      gameContainer.removeChild( coinElements[keyToRemove] );
+      const { x, y } = snapshot.val();
+      const keyToRemove = getKeyString(x, y);
+      gameContainer.removeChild(coinElements[keyToRemove]);
       delete coinElements[keyToRemove];
     })
 
@@ -281,18 +312,40 @@ function getRandomSafeSpot() {
       })
     })
 
-    //Update player color on button click
-    playerColorButton.addEventListener("click", () => {
-      const mySkinIndex = playerColors.indexOf(players[playerId].color);
-      const nextColor = playerColors[mySkinIndex + 1] || playerColors[0];
+    //Update player name on button click
+    playerNameButton.addEventListener("click", () => {
+      const newName = e.target.value || createName();
+      playerNameInput.value = newName;
       playerRef.update({
-        color: nextColor
+        name: newName
       })
     })
 
+    //Update player chat bubble on button click
+    playerChatButton.addEventListener("click", () => {
+      sendChat();
+    })
+
+    playerChatInput.addEventListener("keypress", function(event) {
+      // If the user presses the "Enter" key on the keyboard
+      if (event.key === "Enter") {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        playerChatButton.click();
+      }
+    });
     //Place my first coin
     placeCoin();
 
+  }
+  function sendChat(){
+    playerRef.update({
+      chat_text: playerChatInput.value
+    })
+    playerChatInput.value = "";
+    //Start chat timeout
+    startChat();
   }
 
   firebase.auth().onAuthStateChanged((user) => {
@@ -303,19 +356,20 @@ function getRandomSafeSpot() {
       playerRef = firebase.database().ref(`players/${playerId}`);
 
       const name = createName();
+      const chat_text = "";
       playerNameInput.value = name;
 
-      const {x, y} = getRandomSafeSpot();
+      const { x, y } = getRandomSafeSpot();
 
 
       playerRef.set({
         id: playerId,
         name,
         direction: "right",
-        color: randomFromArray(playerColors),
         x,
         y,
         coins: 0,
+        chat_text,
       })
 
       //Remove me from Firebase when I diconnect
@@ -337,3 +391,5 @@ function getRandomSafeSpot() {
 
 
 })();
+
+
