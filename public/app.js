@@ -1,26 +1,26 @@
 const mapData = {
-  minX: 1,
-  maxX: 14,
+  minX: 2,
+  maxX: 26,
   minY: 4,
   maxY: 12,
   blockedSpaces: {
-    "7x4": true,
-    "1x11": true,
-    "12x10": true,
-    "4x7": true,
+    "2x4": true,
+    "5x10": true,
     "5x7": true,
-    "6x7": true,
-    "8x6": true,
-    "9x6": true,
-    "10x6": true,
-    "7x9": true,
-    "8x9": true,
-    "9x9": true,
+    "3x11": true,
+    "8x11": true,
+    "11x7": true,
+    "11x10": true,
+    "16x7": true,
+    "16x10": true,
+    "19x11": true,
+    "22x7": true,
+    "22x10": true,
+    "24x11": true,
+    "25x4": true
   },
 };
 
-// Options for Player Colors... these are in the same order as our sprite sheet
-const playerColors = ["blue", "red", "orange", "yellow", "green", "purple"];
 
 //Misc Helpers
 function randomFromArray(array) {
@@ -85,23 +85,36 @@ function isSolid(x, y) {
 function getRandomSafeSpot() {
   //We don't look things up by key here, so just return an x/y
   return randomFromArray([
-    { x: 1, y: 4 },
-    { x: 2, y: 4 },
-    { x: 1, y: 5 },
     { x: 2, y: 6 },
-    { x: 2, y: 8 },
     { x: 2, y: 9 },
     { x: 4, y: 8 },
     { x: 5, y: 5 },
     { x: 5, y: 8 },
-    { x: 5, y: 10 },
     { x: 5, y: 11 },
-    { x: 11, y: 7 },
     { x: 12, y: 7 },
+    { x: 12, y: 11 },
+    { x: 16, y: 11 },
+    { x: 18, y: 9 },
+    { x: 19, y: 10 },
+    { x: 21, y: 5 },
+    { x: 25, y: 8 },
+    { x: 19, y: 7 },
     { x: 13, y: 7 },
     { x: 13, y: 6 },
     { x: 13, y: 8 },
+    { x: 16, y: 8 },
+    { x: 16, y: 6 },
+    { x: 17, y: 6 },
+    { x: 21, y: 6 },
     { x: 7, y: 6 },
+    { x: 14, y: 4 },
+    { x: 19, y: 4 },
+    { x: 23, y: 4 },
+    { x: 24, y: 9 },
+    { x: 22, y: 11 },
+    { x: 24, y: 6 },
+    { x: 14, y: 9 },
+    { x: 21, y: 8 },
     { x: 7, y: 7 },
     { x: 7, y: 8 },
     { x: 8, y: 8 },
@@ -123,7 +136,7 @@ function getRandomSafeSpot() {
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
-  const playerColorButton = document.querySelector("#player-color");
+  const playerNameButton = document.querySelector("#player-name-button");
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
@@ -199,7 +212,6 @@ function getRandomSafeSpot() {
         // Now update the DOM
         el.querySelector(".Character_name").innerText = characterState.name;
         el.querySelector(".Character_coins").innerText = characterState.coins;
-        el.setAttribute("data-color", characterState.color);
         el.setAttribute("data-direction", characterState.direction);
         let chatBubble = el.querySelector("#chat-bubble");
         if (characterState.chat_text === ""){
@@ -238,7 +250,6 @@ function getRandomSafeSpot() {
       //Fill in some initial state
       characterElement.querySelector(".Character_name").innerText = addedPlayer.name;
       characterElement.querySelector(".Character_coins").innerText = addedPlayer.coins;
-      characterElement.setAttribute("data-color", addedPlayer.color);
       characterElement.setAttribute("data-direction", addedPlayer.direction);
       const left = 16 * addedPlayer.x + "px";
       const top = 16 * addedPlayer.y - 4 + "px";
@@ -301,12 +312,12 @@ function getRandomSafeSpot() {
       })
     })
 
-    //Update player color on button click
-    playerColorButton.addEventListener("click", () => {
-      const mySkinIndex = playerColors.indexOf(players[playerId].color);
-      const nextColor = playerColors[mySkinIndex + 1] || playerColors[0];
+    //Update player name on button click
+    playerNameButton.addEventListener("click", () => {
+      const newName = e.target.value || createName();
+      playerNameInput.value = newName;
       playerRef.update({
-        color: nextColor
+        name: newName
       })
     })
 
@@ -355,7 +366,6 @@ function getRandomSafeSpot() {
         id: playerId,
         name,
         direction: "right",
-        color: randomFromArray(playerColors),
         x,
         y,
         coins: 0,
