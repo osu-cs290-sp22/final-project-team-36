@@ -2,6 +2,8 @@
 
 Corvallis is a ghost town. There's nothing to do other than stu*dying*, eating, and spending Orange Cash. Ghostvallis is a multiplayer game lobby made entirely with Javascript, CSS, HTML, and a Firebase Live database.
 
+You can test the live production demo [here](https://ghostvallis.web.app/)
+
 ## How does it work?
 
 There are two main factors that take place:
