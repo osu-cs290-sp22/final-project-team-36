@@ -16,7 +16,8 @@ html, body {
 .game-container { 
   position: relative;
   bottom: 100px;
-  width: 240px;
+  left: 75px;
+  width: 392px;
   height: 208px;
   background: url(./images/map.png) no-repeat no-repeat;
   transform: scale(3);
@@ -102,9 +103,16 @@ button:active {
   position: absolute;
   width: 16px;
   height: 16px;
+  left: -23px;
+  top: -2px;
+  /* transform: scale(0.6); */
 }
 .Character {
   transition: transform 0.4s;
+  image-rendering: pixelated;
+  /* top: -10px;
+  left: -20px; */
+  z-index: 1;
 }
 .Character.you {
   z-index: 1;
@@ -115,7 +123,7 @@ button:active {
 .Character_you-arrow {
   display: none;
   position: absolute;
-  top:-18px;
+  top:-23px;
   left: 5px;
   width: 7px;
   height: 5px;
@@ -123,34 +131,26 @@ button:active {
 }
 .Character_sprite {
   overflow: hidden;
-  top: -3px;
-  background: url(./images/characters.png);
+  top: -18px;
+  left: -8px;
+  width: 32px;
+  height: 32px;
+  background: url(./images/ghost.png);
+  animation: ghostFloat 1.5s linear infinite alternate-reverse;
 }
 .Character[data-direction="right"] .Character_sprite {
-  background-position-x: 16px;
-}
-.Character[data-color="red"] .Character_sprite {
-  background-position-y: -16px;
-}
-.Character[data-color="orange"] .Character_sprite {
-  background-position-y: -32px;
-}
-.Character[data-color="yellow"] .Character_sprite {
-  background-position-y: -48px;
-}
-.Character[data-color="green"] .Character_sprite {
-  background-position-y: -64px;
-}
-.Character[data-color="purple"] .Character_sprite {
-  background-position-y: -80px;
+  background-position-x: 32px;
 }
 .Character_shadow {
   background: url(./images/shadow.png) no-repeat no-repeat;
+  left: 0px;
+  top: 2px;
+  transform: scale(0.8);
 }
 
 .Character_name-container {
   position: absolute;
-  top: -12px;
+  top: -18px;
   left: -5px;
   font-size: 5px;
   padding: 1px 2px 1px;
@@ -160,7 +160,10 @@ button:active {
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
+  z-index: auto;
 }
+
+
 .Character_coins {
   margin-left: 1px;
   color: gold;
@@ -168,16 +171,25 @@ button:active {
 
 /* Coins */
 .Coin_sprite {
-  background: url(./images/coin.png) no-repeat no-repeat;
+  background: url(./images/orange-cash.png) no-repeat no-repeat;
   animation: coinFloat 0.8s linear infinite alternate-reverse;
-}
-@keyframes coinFloat {
-  from { transform: translateY(0) }
-  to { transform: translateY(5px) }
+  top: -5px;
+  left: 0px;
 }
 .Coin_shadow {
   background: url(./images/coin-shadow.png) no-repeat no-repeat;
+  top: -1px;
+  left: 0px;
 }
+@keyframes coinFloat {
+  from { transform: scale(0.6) translateY(0) }
+  to { transform: scale(0.7) translateY(5px) }
+}
+@keyframes ghostFloat {
+  from { transform: scale(0.7) translateY(0) }
+  to { transform: scale(0.7) translateY(5px) }
+}
+
 
 /* Chat bubble section */
 .bubble {
@@ -192,7 +204,11 @@ button:active {
   white-space: nowrap;
   color: #000;
   left: 14px;
-  bottom: 18px;
+  bottom: 25px;
+  z-index: 2;
+}
+.bubble.you{
+  z-index: 3;
 }
 
 .bubble-bottom-left:before {
