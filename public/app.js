@@ -193,6 +193,8 @@ function getRandomSafeSpot() {
       attemptGrabCoin(newX, newY);
     }
   }
+
+  
   function initGame() {
 
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))

@@ -67,3 +67,6 @@ node_modules/
 Deployment token.txt
 public/images/map.ase
 public/security-rules.txt
+
+# node_modules
+node_modules/
