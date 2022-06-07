@@ -43,47 +43,45 @@ body {
   width: 240px;
   display: flex;
   gap: 0.5em;
-  align-items: flex-end
-}
-
-.player-chat #chat-box {
-  background-color: #333;
-  opacity: 0.7;
+  align-items: flex-end;
+  background-color: rgb(3,3,3,0.7);
+  opacity: 0.99;
   border: 1px;
   border-radius: 3px;
-  width: 300px;
-  height: 300px;
+  width: 450px;
   display: flex;
   position:static;
-
-
+  flex-wrap: wrap;
+}
+.player-chat *{
+  opacity:1;
 }
 
-#chat-box .chatbox-text.admin-msg {
-  color: lightslategray;
-}
-
-#chat-box .chatbox-text {
-  display: block;
+.player-chat .chatbox-text {
+  position: flex;
   border: 10px, 0px, 10px, 0px;
   color: white;
   opacity: 1  ;
+  width:100%;
 
 }
 
+/* to differentiate admin messages from regular chats */
+.player-chat .chatbox-text.admin-msg {
+  color: lightslategray;
+}
 
-
-#player-input{
-  position:relative;
-  top:70px;
-  right: 300px;
+div#player-input{
+  flex-wrap: nowrap;
+  display:flex;
+  width:100%
 }
 
 input#player-chat-text {
   outline: 0;
   padding-left: 0.5em;
   border: 3px solid #222034;
-  width: 300px;
+  width: 100%;
 }
 
 button#player-chat-button {
@@ -91,7 +89,7 @@ button#player-chat-button {
   font-weight: bold;
   font-size: 18px;
   height: 44px;
-  width: 100px;
+  width: 100%;
   border-radius: 4px;
   outline: 0;
 }
