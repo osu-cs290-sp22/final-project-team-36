@@ -70,3 +70,5 @@ public/security-rules.txt
 
 # node_modules
 node_modules/
+
+public/firebaseInit.js

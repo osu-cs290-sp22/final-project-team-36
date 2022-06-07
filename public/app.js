@@ -194,7 +194,7 @@ function getRandomSafeSpot() {
     }
   }
 
-  
+
   function initGame() {
 
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))
@@ -216,14 +216,14 @@ function getRandomSafeSpot() {
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-direction", characterState.direction);
         let chatBubble = el.querySelector("#chat-bubble");
-        if (characterState.chat_text === ""){
+        if (characterState.chat_text === "") {
           chatBubble.style.display = "none";
         } else {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
         }
-        
+
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -328,7 +328,7 @@ function getRandomSafeSpot() {
       sendChat();
     })
 
-    playerChatInput.addEventListener("keypress", function(event) {
+    playerChatInput.addEventListener("keypress", function (event) {
       // If the user presses the "Enter" key on the keyboard
       if (event.key === "Enter") {
         // Cancel the default action, if needed
@@ -341,7 +341,7 @@ function getRandomSafeSpot() {
     placeCoin();
 
   }
-  function sendChat(){
+  function sendChat() {
     playerRef.update({
       chat_text: playerChatInput.value
     })
