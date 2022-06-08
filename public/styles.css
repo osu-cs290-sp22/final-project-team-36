@@ -150,12 +150,25 @@ button:active {
 }
 /* character costumization stuff */
 .Character_hat_sprite {
+  display: block;
   overflow: hidden;
-  top: -5px;
-  left: -17px;
+  top: -15px;
+  left: 1px;
   width: 13px;
   height: 8px;
   background: url(./images/cap_sprite.png);
+  animation: ghostFloat 1.5s linear infinite alternate-reverse;
+}
+
+.Character_shades_sprite {
+  display: block;
+  overflow: hidden;
+  top: -9px;
+  left: 1px;
+  width: 10px;
+  height: 10px;
+  background: url(./images/shades.png);
+  animation: ghostFloat 1.5s linear infinite alternate-reverse;
 }
 
 .Character_name-container {

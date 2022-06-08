@@ -238,6 +238,7 @@ function getRandomSafeSpot() {
       characterElement.innerHTML = (`
         <div class="Character_shadow grid-cell"></div>
         <div class="Character_sprite grid-cell"></div>
+        <div class="Character_shades_sprite grid-cell"></div>
         <div class="Character_name-container">
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
