@@ -138,6 +138,7 @@ button:active {
   background: url(./images/ghost.png);
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
 }
+
 .Character[data-direction="right"] .Character_sprite {
   background-position-x: 32px;
 }
@@ -146,6 +147,15 @@ button:active {
   left: 0px;
   top: 2px;
   transform: scale(0.8);
+}
+/* character costumization stuff */
+.Character_hat_sprite {
+  overflow: hidden;
+  top: -5px;
+  left: -17px;
+  width: 13px;
+  height: 8px;
+  background: url(./images/cap_sprite.png);
 }
 
 .Character_name-container {
