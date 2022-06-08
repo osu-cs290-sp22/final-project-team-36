@@ -40,7 +40,7 @@ body {
   position: relative;
   top: 250px;
   right: 50px;
-  width: 240px;
+  width: 450px;
   display: flex;
   gap: 0.5em;
   align-items: flex-end;
@@ -48,11 +48,16 @@ body {
   opacity: 0.99;
   border: 1px;
   border-radius: 3px;
-  width: 450px;
-  display: flex;
-  position:static;
   flex-wrap: wrap;
 }
+
+div#chat-box {
+  display:flex;
+  flex-wrap: wrap;
+  width: 450px;
+
+}
+
 .player-chat *{
   opacity:1;
 }
@@ -84,15 +89,24 @@ input#player-chat-text {
   width: 100%;
 }
 
+div#chat-button-container{
+  align-self: flex-end;
+}
+
+div#input-field-container{
+  width: 100%;
+}
+
+/* 
 button#player-chat-button {
   font-family: inherit;
   font-weight: bold;
   font-size: 18px;
   height: 44px;
-  width: 100%;
+  width: 20%;
   border-radius: 4px;
   outline: 0;
-}
+} */
 
 /* Player input style end */
 label {

@@ -350,6 +350,10 @@ function getRandomSafeSpot() {
     startChat();
   }
 
+  function addChat(text){
+    document.getElementById('chat-box')
+  }
+
   firebase.auth().onAuthStateChanged((user) => {
     console.log(user)
     if (user) {
