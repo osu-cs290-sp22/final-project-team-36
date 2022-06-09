@@ -128,7 +128,7 @@ function getRandomSafeSpot() {
 
 
 (function () {
-
+// Firebase variables
   let playerId;
   let playerRef;
   let players = {};
@@ -138,22 +138,26 @@ function getRandomSafeSpot() {
   let item;
   let movementSpeed;
   let hasShades = 0;
-
+// Constants
   const coffeeCost = 15;
   const teaCost = 5;
+  const chowmeinCost = 2;
+  const friedRiceCost = 2;
   const shadesCost = 30;
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
   const playerNameButton = document.querySelector("#player-name-button");
-  // Chat Input & Button
+// Chat input & button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
-  // Play things
-  const coffeeButton = document. querySelector("#coffee-button");
-  const teaButton = document. querySelector("#tea-button");
-  const shadesButton = document. querySelector("#shades-button");
-
+// Store buttons
+  const coffeeButton = document.querySelector("#coffee-button");
+  const teaButton = document.querySelector("#tea-button");
+  const chowmeinButton = document.querySelector("#chowmein-button");
+  const friedRiceButton = document.querySelector("#fried-rice-button");
+  const shadesButton = document.querySelector("#shades-button");
+//Generates coins
   function placeCoin() {
     const { x, y } = getRandomSafeSpot();
     const coinRef = firebase.database().ref(`coins/${getKeyString(x, y)}`);
@@ -161,13 +165,12 @@ function getRandomSafeSpot() {
       x,
       y,
     })
-
     const coinTimeouts = [2000, 3000, 4000, 5000];
     setTimeout(() => {
       placeCoin();
     }, randomFromArray(coinTimeouts));
   }
-
+//Clears chat after 8 seconds
   function startChat() {
     setTimeout(() => {
       playerRef.update({
@@ -175,7 +178,7 @@ function getRandomSafeSpot() {
       })
     }, 8000);
   }
-
+// Checks if player can grab a coin
   function attemptGrabCoin(x, y) {
     const key = getKeyString(x, y);
     if (coins[key]) {
@@ -186,7 +189,7 @@ function getRandomSafeSpot() {
       })
     }
   }
-
+// Coffee effects
   function useCoffee(){
     playerRef.update({
       movementSpeed: players[playerId].movementSpeed * 2,
@@ -194,7 +197,7 @@ function getRandomSafeSpot() {
     })
     startChat();
   }
-
+// Tea effects
   function useTea(){
     playerRef.update({
       movementSpeed: 1,
@@ -202,7 +205,21 @@ function getRandomSafeSpot() {
     })
     startChat();
   }
-
+// Chowmein effects
+  function useChowmein(){
+    playerRef.update({
+      chat_text: "mmm, yummy",
+    })
+    startChat();
+  }
+// Fried rice effects
+  function useFriedRice(){
+    playerRef.update({
+      chat_text: "yummy, mmm",
+    })
+    startChat();
+  }
+// Checks what item is being used
   function useItem() {
     if(players[playerId].item === "coffee") {
       useCoffee();
@@ -210,18 +227,23 @@ function getRandomSafeSpot() {
     if(players[playerId].item === "tea") {
       useTea();
     }
+    if(players[playerId].item === "chowmein") {
+      useChowmein();
+    }
+    if(players[playerId].item === "fried-rice") {
+      useFriedRice();
+    }
     playerRef.update({
       item: "nothing",
     })
   }
-
+// Grabs an item
   function grabItem(item_tag) {
     playerRef.update({
       item: item_tag,
     })
   }
-
-  //Interacting with shops
+// Interacting with shops
   function attemptUseShop(x, y) {
     if((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 3 && players[playerId].x <= 7)) {
       coffeeButton.classList.remove("hidden");
@@ -230,13 +252,20 @@ function getRandomSafeSpot() {
       coffeeButton.classList.add("hidden");
       teaButton.classList.add("hidden");
     }
+    if((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 11 && players[playerId].x <= 15)) {
+      chowmeinButton.classList.remove("hidden");
+      friedRiceButton.classList.remove("hidden");
+    } else {
+      chowmeinButton.classList.add("hidden");
+      friedRiceButton.classList.add("hidden");
+    }
     if((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 19 && players[playerId].x <= 24)) {
       shadesButton.classList.remove("hidden");
     } else {
       shadesButton.classList.add("hidden");
     }
   }
-
+// Handles movement
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
@@ -260,9 +289,8 @@ function getRandomSafeSpot() {
     }
   }
 
-
   function initGame() {
-
+// Watches for user input
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))
     new KeyPressListener("ArrowDown", () => handleArrowPress(0, 1))
     new KeyPressListener("ArrowLeft", () => handleArrowPress(-1, 0))
@@ -271,14 +299,12 @@ function getRandomSafeSpot() {
 
     const allPlayersRef = firebase.database().ref(`players`);
     const allCoinsRef = firebase.database().ref(`coins`);
-
+// Updates the clients document to show database data
     allPlayersRef.on("value", (snapshot) => {
-      //Fires whenever a change occurs
       players = snapshot.val() || {};
       Object.keys(players).forEach((key) => {
         const characterState = players[key];
         let el = playerElements[key];
-        // Now update the DOM
         el.querySelector(".Character_name").innerText = characterState.name;
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-direction", characterState.direction);
@@ -311,8 +337,8 @@ function getRandomSafeSpot() {
         }
       })
     })
+// Handles a new player joining the game
     allPlayersRef.on("child_added", (snapshot) => {
-      //Fires whenever a new node is added the tree
       const addedPlayer = snapshot.val();
       const characterElement = document.createElement("div");
       characterElement.classList.add("Character", "grid-cell");
@@ -333,7 +359,6 @@ function getRandomSafeSpot() {
       `);
       playerElements[addedPlayer.id] = characterElement;
 
-      //Fill in some initial state
       characterElement.querySelector(".Character_name").innerText = addedPlayer.name;
       characterElement.querySelector(".Character_coins").innerText = addedPlayer.coins;
       characterElement.setAttribute("data-direction", addedPlayer.direction);
@@ -342,29 +367,23 @@ function getRandomSafeSpot() {
       characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
       gameContainer.appendChild(characterElement);
     })
-
-
-    //Remove character DOM element after they leave
+// Hanldes a player leaving the game
     allPlayersRef.on("child_removed", (snapshot) => {
       const removedKey = snapshot.val().id;
       gameContainer.removeChild(playerElements[removedKey]);
       delete playerElements[removedKey];
     })
-
-
-    //New - not in the video!
-    //This block will remove coins from local state when Firebase `coins` value updates
+// Removes coins from local state when Firebase `coins` value updates
     allCoinsRef.on("value", (snapshot) => {
       coins = snapshot.val() || {};
     });
-    //
 
     allCoinsRef.on("child_added", (snapshot) => {
       const coin = snapshot.val();
       const key = getKeyString(coin.x, coin.y);
       coins[key] = true;
 
-      // Create the DOM Element
+// Creates the coins for the client
       const coinElement = document.createElement("div");
       coinElement.classList.add("Coin", "grid-cell");
       coinElement.innerHTML = `
@@ -372,12 +391,12 @@ function getRandomSafeSpot() {
         <div class="Coin_sprite grid-cell"></div>
       `;
 
-      // Position the Element
+// Positions the Element
       const left = 16 * coin.x + "px";
       const top = 16 * coin.y - 4 + "px";
       coinElement.style.transform = `translate3d(${left}, ${top}, 0)`;
 
-      // Keep a reference for removal later and add to DOM
+// Keeps a reference for removal later and add to DOM
       coinElements[key] = coinElement;
       gameContainer.appendChild(coinElement);
     })
@@ -389,7 +408,7 @@ function getRandomSafeSpot() {
     })
 
 
-    //Updates player name with text input
+// Updates player name with text input
     playerNameInput.addEventListener("change", (e) => {
       const newName = e.target.value || createName();
       playerNameInput.value = newName;
@@ -398,7 +417,7 @@ function getRandomSafeSpot() {
       })
     })
 
-    //Update player name on button click
+// Updates player name on button click
     playerNameButton.addEventListener("click", () => {
       const newName = e.target.value || createName();
       playerNameInput.value = newName;
@@ -406,7 +425,7 @@ function getRandomSafeSpot() {
         name: newName
       })
     })
-
+// Purchase coffee button
     coffeeButton.addEventListener("click", () => {
         if(players[playerId].coins >= coffeeCost){
         playerRef.update({
@@ -415,7 +434,7 @@ function getRandomSafeSpot() {
         grabItem("coffee");
       }
     })
-
+// Purchase tea button
     teaButton.addEventListener("click", () => {
         if(players[playerId].coins >= teaCost){
         playerRef.update({
@@ -424,23 +443,40 @@ function getRandomSafeSpot() {
         grabItem("tea");
       }
     })
-
-    //update player item costumization
+// Purchase chowmein button
+    chowmeinButton.addEventListener("click", () => {
+        if(players[playerId].coins >= chowmeinCost){
+        playerRef.update({
+          coins: players[playerId].coins - chowmeinCost,
+        })
+        grabItem("chowmein");
+      }
+    })
+// Purchase fried rice button
+    friedRiceButton.addEventListener("click", () => {
+        if(players[playerId].coins >= friedRiceCost){
+        playerRef.update({
+          coins: players[playerId].coins - friedRiceCost,
+        })
+        grabItem("fried_rice");
+      }
+    })
+// Purchase shades button
     shadesButton.addEventListener("click", () => {
       var player_sprite = document.getElementsByClassName('Character_sprite');
       var player = playerElements[playerId];
       var shades = document.getElementsByClassName("Character_shades_sprite");
       var oc = parseInt(player.querySelector('.Character_coins').innerText);
-      //toggle shades sprites
+// Toggles shades sprites
       if(hasShades == 0) {
-        if(oc >= shadesCost) { //buy shades
+        if(oc >= shadesCost) { //Buy shades
           shades[0].classList.remove("hidden");
           hasShades = 1;
           player_sprite[0].style.animation = "none";
           setTimeout(function() {
             player_sprite[0].style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
           },1);
-          //change database data
+          //Change database data
           playerRef.update({
             hasShades : 1,
             coins: players[playerId].coins - shadesCost,
@@ -455,7 +491,7 @@ function getRandomSafeSpot() {
       }
     })
 
-    //Update player chat bubble on button click
+// Update player chat bubble on button click
     playerChatButton.addEventListener("click", () => {
       sendChat();
     })
