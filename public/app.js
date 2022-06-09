@@ -170,8 +170,18 @@ function getRandomSafeSpot() {
       placeCoin();
     }, randomFromArray(coinTimeouts));
   }
-  //Clears chat after 8 seconds
+  //Adds chat to chat log
+  function addChat(text) {
+    var chatBox = document.getElementById('chat-box')
+    var newChat = document.createElement('p1')
+    newChat.className = 'chatbox-text'
+    newChat.textContent = text;
+    chatBox.appendChild(newChat)
+  }
+
+// Clears chat after 8 seconds
   function startChat() {
+    addChat(getTime() + " | " + players[playerId].name + " : " + players[playerId].chat_text);
     setTimeout(() => {
       playerRef.update({
         chat_text: ""
@@ -316,18 +326,12 @@ function getRandomSafeSpot() {
         el.setAttribute("data-direction", characterState.direction);
         el.querySelector(".Character_hand").classList.replace(el.querySelector(".Character_hand").classList.item(2), characterState.item);
         let chatBubble = el.querySelector("#chat-bubble");
-        let chatBox = document.getElementById('chat-box')
         if (characterState.chat_text === "") {
           chatBubble.style.display = "none";
         } else {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
-          var chatText = getTime() + characterState.name + " : " + characterState.chat_text
-          if (!(chatText == chatBox.lastChild.textContent)) {
-            addChat(chatText)
-            chatBox.scrollBy(0, 20)
-          }
         }
 
         const left = 16 * characterState.x + "px";
@@ -525,14 +529,6 @@ function getRandomSafeSpot() {
     playerChatInput.value = "";
     //Start chat timeout
     startChat();
-  }
-
-  function addChat(text) {
-    var chatBox = document.getElementById('chat-box')
-    var newChat = document.createElement('p1')
-    newChat.className = 'chatbox-text'
-    newChat.textContent = text;
-    chatBox.appendChild(newChat)
   }
 
   firebase.auth().onAuthStateChanged((user) => {
