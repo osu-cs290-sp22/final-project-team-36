@@ -242,7 +242,6 @@ function getRandomSafeSpot() {
     })
     allPlayersRef.on("child_added", (snapshot) => {
       //Fires whenever a new node is added the tree
-      var hasShades = 0;
       const addedPlayer = snapshot.val();
       const characterElement = document.createElement("div");
       characterElement.classList.add("Character", "grid-cell");
@@ -360,6 +359,9 @@ function getRandomSafeSpot() {
       } else {
         shades[0].classList.add("hidden");
         hasShades = 0;
+        playerRef.update({
+          hasShades : 0,
+        })
       }
     })
 
@@ -412,6 +414,7 @@ function getRandomSafeSpot() {
         y,
         coins: 0,
         chat_text,
+        hasShades: 0,
       })
 
       //Remove me from Firebase when I diconnect
