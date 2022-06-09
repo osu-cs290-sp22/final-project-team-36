@@ -238,6 +238,17 @@ function getRandomSafeSpot() {
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
+        
+        var shades_sp = el.querySelector(".Character_shades_sprite");
+        if(characterState.hasShades == 1) {
+          shades_sp.classList.remove("hidden");
+          //el.style.animation = "none";
+          setTimeout(function() {
+            //el.style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
+          },1);
+        } else {
+          shades_sp.classList.add("hidden");
+        }
       })
     })
     allPlayersRef.on("child_added", (snapshot) => {
