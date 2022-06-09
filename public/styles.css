@@ -150,11 +150,22 @@ button:active {
   transform: scale(0.8);
 }
 /* character costumization stuff */
-#player-item-button {
+#coffee-button {
   position: relative;
-  float: right;
-  right: 10;
-  left: 900;
+  top: 150;
+  left: -15;
+}
+
+#tea-button {
+  position: relative;
+  top: 150;
+  left: 0;
+}
+
+#shades-button {
+  position: relative;
+  top: 150;
+  left: 810;
 }
 
 .Character[data-direction="right"] .Character_shades_sprite {
@@ -213,8 +224,12 @@ button:active {
   background: none no-repeat no-repeat;
 }
 
-.dixon_coffee {
-  background: url(./images/items/dixon_coffee.png) no-repeat no-repeat;
+.coffee {
+  background: url(./images/items/coffee.png) no-repeat no-repeat;
+}
+
+.tea {
+  background: url(./images/items/tea.png) no-repeat no-repeat;
 }
 
 /* Coins */
