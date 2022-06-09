@@ -141,8 +141,8 @@ function getRandomSafeSpot() {
 // Constants
   const coffeeCost = 15;
   const teaCost = 5;
-  const chowmeinCost = 2;
-  const friedRiceCost = 2;
+  const chowmeinCost = 20;
+  const friedRiceCost = 20;
   const shadesCost = 30;
 
   const gameContainer = document.querySelector(".game-container");
@@ -208,14 +208,14 @@ function getRandomSafeSpot() {
 // Chowmein effects
   function useChowmein(){
     playerRef.update({
-      chat_text: "mmm, yummy",
+      chat_text: "yummy, chowmein",
     })
     startChat();
   }
 // Fried rice effects
   function useFriedRice(){
     playerRef.update({
-      chat_text: "yummy, mmm",
+      chat_text: "yummy, rice",
     })
     startChat();
   }
@@ -458,7 +458,7 @@ function getRandomSafeSpot() {
         playerRef.update({
           coins: players[playerId].coins - friedRiceCost,
         })
-        grabItem("fried_rice");
+        grabItem("fried-rice");
       }
     })
 // Purchase shades button
