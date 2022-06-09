@@ -208,23 +208,25 @@ button:active {
   top: 2px;
   transform: scale(0.8);
 }
-/* character costumization stuff */
+/* Shop Things */
 #coffee-button {
   position: relative;
-  top: 150;
-  left: -15;
 }
 
 #tea-button {
   position: relative;
-  top: 150;
-  left: 0;
+}
+
+#chowmein-button {
+  position: relative;
+}
+
+#fried-rice-button {
+  position: relative;
 }
 
 #shades-button {
   position: relative;
-  top: 150;
-  left: 810;
 }
 
 .Character[data-direction="right"] .Character_shades_sprite {
@@ -289,6 +291,14 @@ button:active {
 
 .tea {
   background: url(./images/items/tea.png) no-repeat no-repeat;
+}
+
+.chowmein {
+  background: url(./images/items/chowmein.png) no-repeat no-repeat;
+}
+
+.fried-rice {
+  background: url(./images/items/fried_rice.png) no-repeat no-repeat;
 }
 
 /* Coins */
