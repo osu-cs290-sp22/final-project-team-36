@@ -172,6 +172,14 @@ button:active {
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
 } */
 
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
 .Character_name-container {
   position: absolute;
   top: -18px;

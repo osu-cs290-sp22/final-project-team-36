@@ -134,7 +134,7 @@ function getRandomSafeSpot() {
   let coins = {};
   let coinElements = {};
   //item stuff
-  const shadesCost = 2;
+  const shadesCost = 30;
   var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
@@ -194,7 +194,15 @@ function getRandomSafeSpot() {
         players[playerId].direction = "left";
       }
       //check for beaverstore positioning
-      
+      var itemButton = document.getElementById("player-item-button");
+      if ((players[playerId].y >= 4 && players[playerId].y <=5) && (players[playerId].x >= 19 && players[playerId].y <=24)) {
+        itemButton.classList.remove("hidden");
+        //itemButton.classList.add("show");
+      } else {
+        itemButton.classList.add("hidden");
+      }
+      //console.log("== x: ", players[playerId].x);
+      //console.log("== y: ", players[playerId].y);
       playerRef.set(players[playerId]);
       attemptGrabCoin(newX, newY);
     }
@@ -347,7 +355,7 @@ function getRandomSafeSpot() {
         }
       } else {
         player_sprite[0].style.background = "url(./images/ghost.png)";
-        player.setAttribute("data-direction", player_sprite.direction);
+        player.setAttribute("data-direction", players[playerId].direction);
         //player.style.backgroundPositionX = "0px";
         hasShades = 0;
       }
