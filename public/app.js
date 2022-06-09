@@ -280,7 +280,7 @@ function getTime(){
     var counter = firebase.database().ref('visitors')
     var number = counter.get()
     counter.set(number+1)
-    return number+1
+    document.getElementById('counter').textContent = number+1
   }
 
   function initGame() {
