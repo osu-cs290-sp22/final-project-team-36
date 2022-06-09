@@ -216,7 +216,6 @@ function getRandomSafeSpot() {
   //Interacting with shops
   function attemptUseShop(x, y) {
     const key = getKeyString(x, y);
-    console.log(key);
     if(key === '5x4') {
       useDixon();
     }
