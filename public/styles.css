@@ -15,15 +15,34 @@ html, body {
 
 .game-container { 
   position: relative;
-  bottom: 100px;
-  left: 75px;
+  /* bottom: 100px; */
+  /* left: 75px; */
+  /* width: 300px;
+  height: 100%; */
   width: 392px;
   height: 208px;
   background: url(./images/map.png) no-repeat no-repeat;
-  transform: scale(3);
+  transform: scale(var(--vw-scale));
+  /* transform-origin: right top; */
+  left:150px;
+  right:0;
+  top:0;
+  bottom:0;
+
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
   image-rendering: pixelated;
 }
-
+.game-pad {
+  text-align:center;
+  width:320px;
+  position:absolute;
+  top: 4em;
+  left: 15em;
+}
 .player-info {
   position: absolute;
   top: 0;

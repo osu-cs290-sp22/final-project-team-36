@@ -1,3 +1,22 @@
+var range = 1 / 400;
+var vw = range * Math.min(window.innerWidth, window.innerHeight);
+
+document.documentElement.style.setProperty('--vw-scale', `${vw}`);
+
+window.addEventListener('resize', () => {
+  
+  let gamePad = document.querySelector("#game-pad-container");
+  var vw_scale = range * Math.min(window.innerWidth, window.innerHeight);
+  document.documentElement.style.setProperty('--vw-scale', `${vw_scale}`);
+  if (vw_scale < 1.5) {
+    //Show gamepad buttons
+    gamePad.style.visibility='visible'
+  } else {
+    //Hide gamepad buttons
+    gamePad.style.visibility='hidden' 
+  }
+});
+
 const mapData = {
   minX: 2,
   maxX: 26,
@@ -140,6 +159,11 @@ function getRandomSafeSpot() {
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
+  // GamePad
+  const playerUpButton = document.querySelector("#player-up-button");
+  const playerDownButton = document.querySelector("#player-down-button");
+  const playerLeftButton = document.querySelector("#player-left-button");
+  const playerRightButton = document.querySelector("#player-right-button");
 
 
   function placeCoin() {
@@ -175,6 +199,22 @@ function getRandomSafeSpot() {
     }
   }
 
+  function movePlayer(direction) {
+    switch (direction) {
+      case "up":
+        handleArrowPress(0, -1);
+        break;
+      case "down":
+        handleArrowPress(0, 1);
+        break;
+      case "left":
+        handleArrowPress(-1, 0);
+        break;
+      case "right":
+        handleArrowPress(1, 0);
+        break;
+    }
+  }
 
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
@@ -214,14 +254,14 @@ function getRandomSafeSpot() {
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-direction", characterState.direction);
         let chatBubble = el.querySelector("#chat-bubble");
-        if (characterState.chat_text === ""){
+        if (characterState.chat_text === "") {
           chatBubble.style.display = "none";
         } else {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
         }
-        
+
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -326,7 +366,21 @@ function getRandomSafeSpot() {
       sendChat();
     })
 
-    playerChatInput.addEventListener("keypress", function(event) {
+    //GamePad button inputs
+    playerUpButton.addEventListener("click", () => {
+      movePlayer("up");
+    })
+    playerDownButton.addEventListener("click", () => {
+      movePlayer("down");
+    })
+    playerLeftButton.addEventListener("click", () => {
+      movePlayer("left");
+    })
+    playerRightButton.addEventListener("click", () => {
+      movePlayer("right");
+    })
+
+    playerChatInput.addEventListener("keypress", function (event) {
       // If the user presses the "Enter" key on the keyboard
       if (event.key === "Enter") {
         // Cancel the default action, if needed
@@ -339,7 +393,7 @@ function getRandomSafeSpot() {
     placeCoin();
 
   }
-  function sendChat(){
+  function sendChat() {
     playerRef.update({
       chat_text: playerChatInput.value
     })
