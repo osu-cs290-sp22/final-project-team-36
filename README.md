@@ -59,6 +59,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 ```
+
+### Setup firebase authentication
+
+First, go to *build/Authentication/Sign-in Method*. Then, "Add new provider" using the Anonymous provider. 
+
+
+## Database rules
+Make sure to set up the rules for your specific database
+
+```javascript
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": false,
+    "players": {
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "coins": {
+      ".write": "auth != null"
+    }
+  }
+}
+```
 ## To-Do Features
 View [project issues](https://github.com/osu-cs290-sp22/final-project-team-36/issues)
 
