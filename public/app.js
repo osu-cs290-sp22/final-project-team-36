@@ -1,3 +1,5 @@
+var movementTimerStart = new Date();
+
 const mapData = {
   minX: 2,
   maxX: 26,
@@ -133,7 +135,8 @@ function getRandomSafeSpot() {
   let playerElements = {};
   let coins = {};
   let coinElements = {};
-  //item stuff
+  let item;
+  let movementSpeed;
   const shadesCost = 30;
   var hasShades = 0;
 
@@ -220,7 +223,6 @@ function getRandomSafeSpot() {
   //Interacting with shops
   function attemptUseShop(x, y) {
     const key = getKeyString(x, y);
-    console.log(key);
     if(key === '5x4') {
       useDixon();
     }
@@ -238,7 +240,8 @@ function getRandomSafeSpot() {
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
-    if (!isSolid(newX, newY)) {
+    var movementTimerEnd = new Date();
+    if (!isSolid(newX, newY) && (movementTimerEnd - movementTimerStart) >= 250 * players[playerId].movementSpeed) {
       //move to the next space
       players[playerId].x = newX;
       players[playerId].y = newY;
@@ -260,6 +263,7 @@ function getRandomSafeSpot() {
       playerRef.set(players[playerId]);
       attemptGrabCoin(newX, newY);
       attemptUseShop(newX, newY);
+      movementTimerStart = new Date();
     }
   }
   function initGame() {
@@ -483,6 +487,8 @@ function getRandomSafeSpot() {
         y,
         coins: 0,
         chat_text,
+        item: "nothing",
+        movementSpeed: 1,
         hasShades: 0,
       })
 
