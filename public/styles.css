@@ -150,27 +150,19 @@ button:active {
   transform: scale(0.8);
 }
 /* character costumization stuff */
-/* .Character_hat_sprite {
-  display: none;
-  overflow: hidden;
-  top: -15px;
-  left: -3px;
-  width: 13px;
-  height: 8px;
-  background: url(./images/cap_sprite.png);
-  animation: ghostFloat 1.5s linear infinite alternate-reverse;
+.Character[data-direction="right"] .Character_shades_sprite {
+  background-position-x: 32px;
 }
 
 .Character_shades_sprite {
-  display: none;
   overflow: hidden;
-  top: -9px;
-  left: 0px;
-  width: 10px;
-  height: 10px;
-  background: url(./images/shades.png);
+  top: -18px;
+  left: -8px;
+  width: 32px;
+  height: 32px;
+  background: url(./images/shades_over.png);
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
-} */
+}
 
 .hidden {
   display: none;

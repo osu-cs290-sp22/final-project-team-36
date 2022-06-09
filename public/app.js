@@ -143,7 +143,7 @@ function getRandomSafeSpot() {
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
-  //costumization studd
+  //costumization stuff
   const playerItemButton = document. querySelector("#player-item-button");
 
   function placeCoin() {
@@ -252,6 +252,7 @@ function getRandomSafeSpot() {
       characterElement.innerHTML = (`
         <div class="Character_shadow grid-cell"></div>
         <div class="Character_sprite grid-cell"></div>
+        <div id="cool" class="Character_shades_sprite grid-cell hidden"></div>
         <div class="Character_name-container">
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
@@ -339,24 +340,24 @@ function getRandomSafeSpot() {
     playerItemButton.addEventListener("click", () => {
       var player_sprite = document.getElementsByClassName('Character_sprite');
       var player = playerElements[playerId];
+      var shades = document.getElementsByClassName("Character_shades_sprite");
       var oc = parseInt(player.querySelector('.Character_coins').innerText);
       //toggle shades sprites
       if(hasShades == 0) {
         if(oc >= shadesCost) { //buy shades
-          player_sprite[0].style.background = "url(./images/shades.png)";
-          player.setAttribute("data-direction", players[playerId].direction);
-          console.log(players[playerId].direction);
-          //player.style.backgroundPositionX = "0px";
+          shades[0].classList.remove("hidden");
           hasShades = 1;
+          player_sprite[0].style.animation = "none";
+          setTimeout(function() {
+            player_sprite[0].style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
+          },1);
           //change player coin amount
           playerRef.update({
             coins: players[playerId].coins - shadesCost,
           })
         }
       } else {
-        player_sprite[0].style.background = "url(./images/ghost.png)";
-        player.setAttribute("data-direction", players[playerId].direction);
-        //player.style.backgroundPositionX = "0px";
+        shades[0].classList.add("hidden");
         hasShades = 0;
       }
     })
