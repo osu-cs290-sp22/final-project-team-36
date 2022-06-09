@@ -134,7 +134,7 @@ function getRandomSafeSpot() {
   let coins = {};
   let coinElements = {};
   //item stuff
-  const shadesCost = 2;
+  const shadesCost = 30;
   var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
