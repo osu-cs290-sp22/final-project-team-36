@@ -336,6 +336,9 @@ function getRandomSafeSpot() {
       if(hasShades == 0) {
         if(oc >= shadesCost) { //buy shades
           player_sprite[0].style.background = "url(./images/shades.png)";
+          player.setAttribute("data-direction", players[playerId].direction);
+          console.log(players[playerId].direction);
+          //player.style.backgroundPositionX = "0px";
           hasShades = 1;
           //change player coin amount
           playerRef.update({
@@ -344,6 +347,8 @@ function getRandomSafeSpot() {
         }
       } else {
         player_sprite[0].style.background = "url(./images/ghost.png)";
+        player.setAttribute("data-direction", player_sprite.direction);
+        //player.style.backgroundPositionX = "0px";
         hasShades = 0;
       }
     })

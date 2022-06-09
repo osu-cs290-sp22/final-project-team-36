@@ -142,6 +142,7 @@ button:active {
 .Character[data-direction="right"] .Character_sprite {
   background-position-x: 32px;
 }
+
 .Character_shadow {
   background: url(./images/shadow.png) no-repeat no-repeat;
   left: 0px;
