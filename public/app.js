@@ -181,20 +181,14 @@ function getRandomSafeSpot() {
       })
     }
   }
-/*
 
-*** START OF GRABBING AND USING ITEMS BRANCH
-
-*/
-
-  function useRedCube(){
-    console.log("THE RED CUBE HAS BEEN USED!!!");
+  function useCoffee(){
+    players[playerId].chat_text = "COFFEE";
   }
 
-//
   function useItem() {
-    if(players[playerId].item === "red_cube") {
-      useRedCube();
+    if(players[playerId].item === "dixon_coffee") {
+      useCoffee();
     }
 /* TEMPLATE FOR ADDING ITEMS
     if(item === "item tag"){
@@ -218,7 +212,7 @@ function getRandomSafeSpot() {
       playerRef.update({
         coins: players[playerId].coins - 2,
       })
-      grabItem("red_cube");
+      grabItem("dixon_coffee");
       console.log("Item Grabbed!")
     }
   }
@@ -235,11 +229,7 @@ function getRandomSafeSpot() {
     }
 */
   }
-  /*
-  
-  *** END OF GRABBING AND USING ITEMS BRANCH
-  
-  */
+
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
