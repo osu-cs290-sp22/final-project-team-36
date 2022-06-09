@@ -139,11 +139,11 @@ function getRandomSafeSpot() {
   let movementSpeed;
   let hasShades = 0;
   // Constants
-  const coffeeCost = 15;
-  const teaCost = 5;
-  const chowmeinCost = 20;
-  const friedRiceCost = 20;
-  const shadesCost = 30;
+  const coffeeCost = 5;
+  const teaCost = 2;
+  const chowmeinCost = 8;
+  const friedRiceCost = 8;
+  const shadesCost = 15;
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
