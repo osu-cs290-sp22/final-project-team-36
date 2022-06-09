@@ -200,6 +200,19 @@ button:active {
   color: gold;
 }
 
+.Character_hand {
+  left: 4px;
+  top: -5px;
+  width: 7.5px;
+  height: 7.5px;
+  animation: ghostFloat 1.5s linear infinite alternate-reverse;
+}
+
+/* Item classes */
+.red_cube {
+  background: url(./images/items/item_placeholder.png) no-repeat no-repeat;
+}
+
 /* Coins */
 .Coin_sprite {
   background: url(./images/orange-cash.png) no-repeat no-repeat;

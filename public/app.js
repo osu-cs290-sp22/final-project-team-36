@@ -178,8 +178,63 @@ function getRandomSafeSpot() {
       })
     }
   }
+/*
 
+*** START OF GRABBING AND USING ITEMS BRANCH
 
+*/
+
+  function useRedCube(){
+    console.log("THE RED CUBE HAS BEEN USED!!!");
+  }
+
+//
+  function useItem() {
+    var item = document.querySelector(".you").querySelector(".Character_hand").classList.item(2);
+    document.querySelector(".you").querySelector(".Character_hand").classList.remove(item);
+    if(item === "red_cube"){
+      useRedCube();
+    }
+/* TEMPLATE FOR ADDING ITEMS
+    if(item === "item tag"){
+      useItemFunction(); //Implement above
+    }
+*/
+  }
+
+  function grabItem(item_tag) {
+    document.querySelector(".you").querySelector(".Character_hand").classList.add(item_tag);
+  }
+
+  //Dixon interaction placeholder function
+  function useDixon() {
+    if(players[playerId].coins >= 2){
+      playerRef.update({
+        coins: players[playerId].coins - 2,
+      })
+      grabItem("red_cube");
+      console.log("Item Grabbed!")
+    }
+  }
+
+  //Interacting with shops
+  function attemptUseShop(x, y) {
+    const key = getKeyString(x, y);
+    console.log(key);
+    if(key === '5x4') {
+      useDixon();
+    }
+/* TEMPLATE FOR ADDING BUILDINGS/SHOPS
+    if(key === 'building location') {
+      useBuildingFunction(); //Implement above
+    }
+*/
+  }
+  /*
+  
+  *** END OF GRABBING AND USING ITEMS BRANCH
+  
+  */
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
@@ -204,6 +259,7 @@ function getRandomSafeSpot() {
       //console.log("== y: ", players[playerId].y);
       playerRef.set(players[playerId]);
       attemptGrabCoin(newX, newY);
+      attemptUseShop(newX, newY);
     }
   }
   function initGame() {
@@ -212,6 +268,7 @@ function getRandomSafeSpot() {
     new KeyPressListener("ArrowDown", () => handleArrowPress(0, 1))
     new KeyPressListener("ArrowLeft", () => handleArrowPress(-1, 0))
     new KeyPressListener("ArrowRight", () => handleArrowPress(1, 0))
+    new KeyPressListener("ShiftRight", () => useItem())
 
     const allPlayersRef = firebase.database().ref(`players`);
     const allCoinsRef = firebase.database().ref(`coins`);
@@ -267,6 +324,7 @@ function getRandomSafeSpot() {
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
         </div>
+        <div class="Character_hand grid-cell"></div>
         <div class="Character_you-arrow"></div>
         <div id="chat-bubble" class="bubble bubble-bottom-left" style="display: none;"></div>
       `);
@@ -447,5 +505,4 @@ function getRandomSafeSpot() {
 
 
 })();
-
 
