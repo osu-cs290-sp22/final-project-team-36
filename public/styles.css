@@ -138,14 +138,45 @@ button:active {
   background: url(./images/ghost.png);
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
 }
+
 .Character[data-direction="right"] .Character_sprite {
   background-position-x: 32px;
 }
+
 .Character_shadow {
   background: url(./images/shadow.png) no-repeat no-repeat;
   left: 0px;
   top: 2px;
   transform: scale(0.8);
+}
+/* character costumization stuff */
+#player-item-button {
+  position: relative;
+  float: right;
+  right: 10;
+  left: 900;
+}
+
+.Character[data-direction="right"] .Character_shades_sprite {
+  background-position-x: 32px;
+}
+
+.Character_shades_sprite {
+  overflow: hidden;
+  top: -18px;
+  left: -8px;
+  width: 32px;
+  height: 32px;
+  background: url(./images/shades_over.png);
+  animation: ghostFloat 1.5s linear infinite alternate-reverse;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
 }
 
 .Character_name-container {

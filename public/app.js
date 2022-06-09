@@ -133,6 +133,9 @@ function getRandomSafeSpot() {
   let playerElements = {};
   let coins = {};
   let coinElements = {};
+  //item stuff
+  const shadesCost = 2;
+  var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
@@ -140,7 +143,8 @@ function getRandomSafeSpot() {
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
-
+  //costumization stuff
+  const playerItemButton = document. querySelector("#player-item-button");
 
   function placeCoin() {
     const { x, y } = getRandomSafeSpot();
@@ -244,6 +248,15 @@ function getRandomSafeSpot() {
       if (xChange === -1) {
         players[playerId].direction = "left";
       }
+      //check for beaverstore positioning
+      var itemButton = document.getElementById("player-item-button");
+      if ((players[playerId].y >= 4 && players[playerId].y <=5) && (players[playerId].x >= 19 && players[playerId].y <=24)) {
+        itemButton.classList.remove("hidden");
+      } else {
+        itemButton.classList.add("hidden");
+      }
+      //console.log("== x: ", players[playerId].x);
+      //console.log("== y: ", players[playerId].y);
       playerRef.set(players[playerId]);
       attemptGrabCoin(newX, newY);
       attemptUseShop(newX, newY);
@@ -282,6 +295,17 @@ function getRandomSafeSpot() {
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
+        
+        var shades_sp = el.querySelector(".Character_shades_sprite");
+        if(characterState.hasShades == 1) {
+          shades_sp.classList.remove("hidden");
+          //el.style.animation = "none";
+          setTimeout(function() {
+            //el.style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
+          },1);
+        } else {
+          shades_sp.classList.add("hidden");
+        }
       })
     })
     allPlayersRef.on("child_added", (snapshot) => {
@@ -295,6 +319,7 @@ function getRandomSafeSpot() {
       characterElement.innerHTML = (`
         <div class="Character_shadow grid-cell"></div>
         <div class="Character_sprite grid-cell"></div>
+        <div id="cool" class="Character_shades_sprite grid-cell hidden"></div>
         <div class="Character_name-container">
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
@@ -379,6 +404,36 @@ function getRandomSafeSpot() {
       })
     })
 
+    //update player item costumization
+    playerItemButton.addEventListener("click", () => {
+      var player_sprite = document.getElementsByClassName('Character_sprite');
+      var player = playerElements[playerId];
+      var shades = document.getElementsByClassName("Character_shades_sprite");
+      var oc = parseInt(player.querySelector('.Character_coins').innerText);
+      //toggle shades sprites
+      if(hasShades == 0) {
+        if(oc >= shadesCost) { //buy shades
+          shades[0].classList.remove("hidden");
+          hasShades = 1;
+          player_sprite[0].style.animation = "none";
+          setTimeout(function() {
+            player_sprite[0].style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
+          },1);
+          //change database data
+          playerRef.update({
+            hasShades : 1,
+            coins: players[playerId].coins - shadesCost,
+          })
+        }
+      } else {
+        shades[0].classList.add("hidden");
+        hasShades = 0;
+        playerRef.update({
+          hasShades : 0,
+        })
+      }
+    })
+
     //Update player chat bubble on button click
     playerChatButton.addEventListener("click", () => {
       sendChat();
@@ -428,6 +483,7 @@ function getRandomSafeSpot() {
         y,
         coins: 0,
         chat_text,
+        hasShades: 0,
       })
 
       //Remove me from Firebase when I diconnect
