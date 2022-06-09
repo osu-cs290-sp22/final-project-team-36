@@ -133,7 +133,7 @@ function getRandomSafeSpot() {
   let playerElements = {};
   let coins = {};
   let coinElements = {};
-  //item stuff
+  let item;
   const shadesCost = 30;
   var hasShades = 0;
 
@@ -190,9 +190,7 @@ function getRandomSafeSpot() {
 
 //
   function useItem() {
-    var item = document.querySelector(".you").querySelector(".Character_hand").classList.item(2);
-    document.querySelector(".you").querySelector(".Character_hand").classList.remove(item);
-    if(item === "red_cube"){
+    if(players[playerId].item === "red_cube") {
       useRedCube();
     }
 /* TEMPLATE FOR ADDING ITEMS
@@ -200,10 +198,15 @@ function getRandomSafeSpot() {
       useItemFunction(); //Implement above
     }
 */
+    playerRef.update({
+      item: "nothing",
+    })
   }
 
   function grabItem(item_tag) {
-    document.querySelector(".you").querySelector(".Character_hand").classList.add(item_tag);
+    playerRef.update({
+      item: item_tag,
+    })
   }
 
   //Dixon interaction placeholder function
@@ -220,7 +223,6 @@ function getRandomSafeSpot() {
   //Interacting with shops
   function attemptUseShop(x, y) {
     const key = getKeyString(x, y);
-    console.log(key);
     if(key === '5x4') {
       useDixon();
     }
@@ -283,6 +285,7 @@ function getRandomSafeSpot() {
         el.querySelector(".Character_name").innerText = characterState.name;
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-direction", characterState.direction);
+        el.querySelector(".Character_hand").classList.replace(el.querySelector(".Character_hand").classList.item(2), characterState.item);
         let chatBubble = el.querySelector("#chat-bubble");
         if (characterState.chat_text === ""){
           chatBubble.style.display = "none";
@@ -324,7 +327,7 @@ function getRandomSafeSpot() {
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
         </div>
-        <div class="Character_hand grid-cell"></div>
+        <div class="Character_hand grid-cell nothing"></div>
         <div class="Character_you-arrow"></div>
         <div id="chat-bubble" class="bubble bubble-bottom-left" style="display: none;"></div>
       `);
@@ -483,6 +486,7 @@ function getRandomSafeSpot() {
         y,
         coins: 0,
         chat_text,
+        item: "nothing",
         hasShades: 0,
       })
 
