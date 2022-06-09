@@ -137,8 +137,11 @@ function getRandomSafeSpot() {
   let coinElements = {};
   let item;
   let movementSpeed;
+  let hasShades = 0;
+
+  const coffeeCost = 15;
+  const teaCost = 5;
   const shadesCost = 30;
-  var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
@@ -146,8 +149,10 @@ function getRandomSafeSpot() {
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
-  //costumization stuff
-  const playerItemButton = document. querySelector("#player-item-button");
+  // Play things
+  const coffeeButton = document. querySelector("#coffee-button");
+  const teaButton = document. querySelector("#tea-button");
+  const shadesButton = document. querySelector("#shades-button");
 
   function placeCoin() {
     const { x, y } = getRandomSafeSpot();
@@ -181,26 +186,28 @@ function getRandomSafeSpot() {
       })
     }
   }
-/*
 
-*** START OF GRABBING AND USING ITEMS BRANCH
-
-*/
-
-  function useRedCube(){
-    console.log("THE RED CUBE HAS BEEN USED!!!");
+  function useCoffee(){
+    playerRef.update({
+      movementSpeed: players[playerId].movementSpeed * 2,
+      chat_text: "COFFEE!!!",
+    })
   }
 
-//
+  function useTea(){
+    playerRef.update({
+      movementSpeed: 1,
+      chat_text: "ahh, tea...",
+    })
+  }
+
   function useItem() {
-    if(players[playerId].item === "red_cube") {
-      useRedCube();
+    if(players[playerId].item === "coffee") {
+      useCoffee();
     }
-/* TEMPLATE FOR ADDING ITEMS
-    if(item === "item tag"){
-      useItemFunction(); //Implement above
+    if(players[playerId].item === "tea") {
+      useTea();
     }
-*/
     playerRef.update({
       item: "nothing",
     })
@@ -212,39 +219,27 @@ function getRandomSafeSpot() {
     })
   }
 
-  //Dixon interaction placeholder function
-  function useDixon() {
-    if(players[playerId].coins >= 2){
-      playerRef.update({
-        coins: players[playerId].coins - 2,
-      })
-      grabItem("red_cube");
-      console.log("Item Grabbed!")
+  //Interacting with shops
+  function attemptUseShop(x, y) {
+    if((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 3 && players[playerId].x <= 7)) {
+      coffeeButton.classList.remove("hidden");
+      teaButton.classList.remove("hidden");
+    } else {
+      coffeeButton.classList.add("hidden");
+      teaButton.classList.add("hidden");
+    }
+    if((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 19 && players[playerId].x <= 24)) {
+      shadesButton.classList.remove("hidden");
+    } else {
+      shadesButton.classList.add("hidden");
     }
   }
 
-  //Interacting with shops
-  function attemptUseShop(x, y) {
-    const key = getKeyString(x, y);
-    if(key === '5x4') {
-      useDixon();
-    }
-/* TEMPLATE FOR ADDING BUILDINGS/SHOPS
-    if(key === 'building location') {
-      useBuildingFunction(); //Implement above
-    }
-*/
-  }
-  /*
-  
-  *** END OF GRABBING AND USING ITEMS BRANCH
-  
-  */
   function handleArrowPress(xChange = 0, yChange = 0) {
     const newX = players[playerId].x + xChange;
     const newY = players[playerId].y + yChange;
     var movementTimerEnd = new Date();
-    if (!isSolid(newX, newY) && (movementTimerEnd - movementTimerStart) >= 250 * players[playerId].movementSpeed) {
+    if (!isSolid(newX, newY) && (movementTimerEnd - movementTimerStart) * players[playerId].movementSpeed >= 250) {
       //move to the next space
       players[playerId].x = newX;
       players[playerId].y = newY;
@@ -253,13 +248,6 @@ function getRandomSafeSpot() {
       }
       if (xChange === -1) {
         players[playerId].direction = "left";
-      }
-      //check for beaverstore positioning
-      var itemButton = document.getElementById("player-item-button");
-      if ((players[playerId].y >= 4 && players[playerId].y <=5) && (players[playerId].x >= 19 && players[playerId].y <=24)) {
-        itemButton.classList.remove("hidden");
-      } else {
-        itemButton.classList.add("hidden");
       }
       //console.log("== x: ", players[playerId].x);
       //console.log("== y: ", players[playerId].y);
@@ -417,8 +405,26 @@ function getRandomSafeSpot() {
       })
     })
 
+    coffeeButton.addEventListener("click", () => {
+        if(players[playerId].coins >= coffeeCost){
+        playerRef.update({
+          coins: players[playerId].coins - coffeeCost,
+        })
+        grabItem("coffee");
+      }
+    })
+
+    teaButton.addEventListener("click", () => {
+        if(players[playerId].coins >= teaCost){
+        playerRef.update({
+          coins: players[playerId].coins - teaCost,
+        })
+        grabItem("tea");
+      }
+    })
+
     //update player item costumization
-    playerItemButton.addEventListener("click", () => {
+    shadesButton.addEventListener("click", () => {
       var player_sprite = document.getElementsByClassName('Character_sprite');
       var player = playerElements[playerId];
       var shades = document.getElementsByClassName("Character_shades_sprite");
