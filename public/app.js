@@ -275,6 +275,13 @@ function getTime(){
     }
   }
 
+  // increments visitor counter by 1
+  function updateVisitors(){
+    var counter = firebase.database().ref('visitors')
+    var number = counter.get()
+    counter.set(number+1)
+    return number+1
+  }
 
   function initGame() {
 
@@ -284,6 +291,7 @@ function getTime(){
     new KeyPressListener("ArrowRight", () => handleArrowPress(1, 0))
     new KeyPressListener("ShiftRight", () => useItem())
 
+    
     const allPlayersRef = firebase.database().ref(`players`);
     const allCoinsRef = firebase.database().ref(`coins`);
 
@@ -359,6 +367,8 @@ function getTime(){
       const top = 16 * addedPlayer.y - 4 + "px";
       characterElement.style.transform = `translate3d(${left}, ${top}, 0)`;
       gameContainer.appendChild(characterElement);
+
+      document.getElementById('counter')
     })
 
 

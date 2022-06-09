@@ -1,12 +1,17 @@
 // NOTE - INCLUDE YOUR FIREBASE CONFIG HERE FOR ANYTHING TO WORK:
+
+// git update-index --assume-unchanged public/firebaseInit.js
+//git update-index --no-assume-unchanged public/firebaseInit.js
+
 const firebaseConfig = {
-    apiKey: "AIzaSyCmXl8u8Jt5_UH08-5nENQNQEMXPGys9kk",
-    authDomain: "ghostvallis.firebaseapp.com",
-    databaseURL: "https://ghostvallis-default-rtdb.firebaseio.com",
-    projectId: "ghostvallis",
-    storageBucket: "ghostvallis.appspot.com",
-    messagingSenderId: "845637151347",
-    appId: "1:845637151347:web:ad179ef5e70c257ec31806",
-    measurementId: "G-L2XPD49Z8K"
-};
+    apiKey: "AIzaSyDtOWeZSNk1lu1B4gXdlZc6sFmm3Y0sLkA",
+    authDomain: "ghostvallis-local.firebaseapp.com",
+    projectId: "ghostvallis-local",
+    storageBucket: "ghostvallis-local.appspot.com",
+    messagingSenderId: "705571016036",
+    appId: "1:705571016036:web:daf2f1d0758d5c7c6cbe71",
+    measurementId: "G-KY4YZP1V7N",
+    databaseURL: "https://ghostvallis-local-default-rtdb.firebaseio.com/"
+}
+
 firebase.initializeApp(firebaseConfig);
