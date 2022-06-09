@@ -2,7 +2,7 @@
 
 Corvallis is a ghost town. There's nothing to do other than stu*dying*, eating, and spending Orange Cash. Ghostvallis is a multiplayer game lobby made entirely with Javascript, CSS, HTML, and a Firebase Live database.
 
-You can test the live production demo [here](https://ghostvallis.web.app/)
+You can test the live production demo [here](https://ghostvallis.firebaseapp.com/)
 
 ## How does it work?
 
@@ -58,6 +58,31 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+```
+
+### Setup firebase authentication
+
+First, go to *build/Authentication/Sign-in Method*. Then, "Add new provider" using the Anonymous provider. 
+
+
+## Database rules
+Make sure to set up the rules for your specific database
+
+```javascript
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": false,
+    "players": {
+      "$uid": {
+        ".write": "auth != null && auth.uid == $uid"
+      }
+    },
+    "coins": {
+      ".write": "auth != null"
+    }
+  }
+}
 ```
 ## To-Do Features
 View [project issues](https://github.com/osu-cs290-sp22/final-project-team-36/issues)
