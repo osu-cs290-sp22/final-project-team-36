@@ -192,6 +192,7 @@ function getRandomSafeSpot() {
       movementSpeed: players[playerId].movementSpeed * 2,
       chat_text: "COFFEE!!!",
     })
+    startChat();
   }
 
   function useTea(){
@@ -199,6 +200,7 @@ function getRandomSafeSpot() {
       movementSpeed: 1,
       chat_text: "ahh, tea...",
     })
+    startChat();
   }
 
   function useItem() {
