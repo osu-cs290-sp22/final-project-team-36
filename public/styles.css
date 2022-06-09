@@ -150,6 +150,13 @@ button:active {
   transform: scale(0.8);
 }
 /* character costumization stuff */
+#player-item-button {
+  position: relative;
+  float: right;
+  right: 10;
+  left: 900;
+}
+
 .Character[data-direction="right"] .Character_shades_sprite {
   background-position-x: 32px;
 }

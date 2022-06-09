@@ -134,7 +134,7 @@ function getRandomSafeSpot() {
   let coins = {};
   let coinElements = {};
   //item stuff
-  const shadesCost = 30;
+  const shadesCost = 2;
   var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
@@ -197,7 +197,6 @@ function getRandomSafeSpot() {
       var itemButton = document.getElementById("player-item-button");
       if ((players[playerId].y >= 4 && players[playerId].y <=5) && (players[playerId].x >= 19 && players[playerId].y <=24)) {
         itemButton.classList.remove("hidden");
-        //itemButton.classList.add("show");
       } else {
         itemButton.classList.add("hidden");
       }
@@ -243,6 +242,7 @@ function getRandomSafeSpot() {
     })
     allPlayersRef.on("child_added", (snapshot) => {
       //Fires whenever a new node is added the tree
+      var hasShades = 0;
       const addedPlayer = snapshot.val();
       const characterElement = document.createElement("div");
       characterElement.classList.add("Character", "grid-cell");
@@ -351,8 +351,9 @@ function getRandomSafeSpot() {
           setTimeout(function() {
             player_sprite[0].style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
           },1);
-          //change player coin amount
+          //change database data
           playerRef.update({
+            hasShades : 1,
             coins: players[playerId].coins - shadesCost,
           })
         }
