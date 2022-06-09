@@ -45,7 +45,7 @@ body {
   display: flex;
   gap: 0.5em;
   align-items: flex-end;
-  background-color: rgb(3,3,3,0.7);
+  background-color: rgb(3, 3, 3, 0.7);
   opacity: 0.99;
   border: 1px;
   border-radius: 3px;
@@ -54,7 +54,7 @@ body {
 
 /* div containing chat messages */
 div#chat-box {
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   width: 450px;
   height: 150px;
@@ -67,8 +67,8 @@ div#chat-box {
 /* chat messages */
 .player-chat .chatbox-text {
   color: white;
-  opacity: 1  ;
-  width:100%;
+  opacity: 1;
+  width: 100%;
   height: 20px;
 
 }
@@ -78,10 +78,10 @@ div#chat-box {
   color: lightslategray;
 }
 
-div#player-input{
+div#player-input {
   flex-wrap: nowrap;
-  display:flex;
-  width:100%
+  display: flex;
+  width: 100%
 }
 
 input#player-chat-text {
@@ -91,24 +91,17 @@ input#player-chat-text {
   width: 100%;
 }
 
-div#chat-button-container{
+div#chat-button-container {
   align-self: flex-end;
 }
 
-div#input-field-container{
+div#input-field-container {
   width: 100%;
 }
 
-/* 
 button#player-chat-button {
-  font-family: inherit;
-  font-weight: bold;
-  font-size: 18px;
-  height: 44px;
-  width: 20%;
-  border-radius: 4px;
-  outline: 0;
-} */
+  width: 100px;
+}
 
 /* Player input style end */
 label {
@@ -208,6 +201,7 @@ button:active {
   top: 2px;
   transform: scale(0.8);
 }
+
 /* character costumization stuff */
 #player-item-button {
   position: relative;

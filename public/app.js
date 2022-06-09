@@ -126,6 +126,11 @@ function getRandomSafeSpot() {
   ]);
 }
 
+function getTime(){
+  var now = new Date()
+  var time = '['+now.getHours() +":"+now.getMinutes()+'] '
+  return time
+}
 
 (function () {
 
@@ -147,7 +152,7 @@ function getRandomSafeSpot() {
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
   //costumization stuff
-  const playerItemButton = document. querySelector("#player-item-button");
+  const playerItemButton = document.querySelector("#player-item-button");
 
   function placeCoin() {
     const { x, y } = getRandomSafeSpot();
@@ -181,26 +186,26 @@ function getRandomSafeSpot() {
       })
     }
   }
-/*
+  /*
+  
+  *** START OF GRABBING AND USING ITEMS BRANCH
+  
+  */
 
-*** START OF GRABBING AND USING ITEMS BRANCH
-
-*/
-
-  function useRedCube(){
+  function useRedCube() {
     console.log("THE RED CUBE HAS BEEN USED!!!");
   }
 
-//
+  //
   function useItem() {
-    if(players[playerId].item === "red_cube") {
+    if (players[playerId].item === "red_cube") {
       useRedCube();
     }
-/* TEMPLATE FOR ADDING ITEMS
-    if(item === "item tag"){
-      useItemFunction(); //Implement above
-    }
-*/
+    /* TEMPLATE FOR ADDING ITEMS
+        if(item === "item tag"){
+          useItemFunction(); //Implement above
+        }
+    */
     playerRef.update({
       item: "nothing",
     })
@@ -214,7 +219,7 @@ function getRandomSafeSpot() {
 
   //Dixon interaction placeholder function
   function useDixon() {
-    if(players[playerId].coins >= 2){
+    if (players[playerId].coins >= 2) {
       playerRef.update({
         coins: players[playerId].coins - 2,
       })
@@ -226,14 +231,14 @@ function getRandomSafeSpot() {
   //Interacting with shops
   function attemptUseShop(x, y) {
     const key = getKeyString(x, y);
-    if(key === '5x4') {
+    if (key === '5x4') {
       useDixon();
     }
-/* TEMPLATE FOR ADDING BUILDINGS/SHOPS
-    if(key === 'building location') {
-      useBuildingFunction(); //Implement above
-    }
-*/
+    /* TEMPLATE FOR ADDING BUILDINGS/SHOPS
+        if(key === 'building location') {
+          useBuildingFunction(); //Implement above
+        }
+    */
   }
   /*
   
@@ -256,7 +261,7 @@ function getRandomSafeSpot() {
       }
       //check for beaverstore positioning
       var itemButton = document.getElementById("player-item-button");
-      if ((players[playerId].y >= 4 && players[playerId].y <=5) && (players[playerId].x >= 19 && players[playerId].y <=24)) {
+      if ((players[playerId].y >= 4 && players[playerId].y <= 5) && (players[playerId].x >= 19 && players[playerId].y <= 24)) {
         itemButton.classList.remove("hidden");
       } else {
         itemButton.classList.add("hidden");
@@ -301,21 +306,24 @@ function getRandomSafeSpot() {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
-          addChat(characterState.name+ ":" +characterState.chat_text)
-          chatBox.scrollBy(0, 20)
+          var chatText = getTime() + characterState.name + " : " + characterState.chat_text
+          if (!(chatText == chatBox.lastChild.textContent)) {//prevents chat from duplicating for every render
+            addChat(chatText)
+            chatBox.scrollBy(0, 20)
+          }
         }
 
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
-        
+
         var shades_sp = el.querySelector(".Character_shades_sprite");
-        if(characterState.hasShades == 1) {
+        if (characterState.hasShades == 1) {
           shades_sp.classList.remove("hidden");
           //el.style.animation = "none";
-          setTimeout(function() {
+          setTimeout(function () {
             //el.style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
-          },1);
+          }, 1);
         } else {
           shades_sp.classList.add("hidden");
         }
@@ -424,17 +432,17 @@ function getRandomSafeSpot() {
       var shades = document.getElementsByClassName("Character_shades_sprite");
       var oc = parseInt(player.querySelector('.Character_coins').innerText);
       //toggle shades sprites
-      if(hasShades == 0) {
-        if(oc >= shadesCost) { //buy shades
+      if (hasShades == 0) {
+        if (oc >= shadesCost) { //buy shades
           shades[0].classList.remove("hidden");
           hasShades = 1;
           player_sprite[0].style.animation = "none";
-          setTimeout(function() {
-            player_sprite[0].style.animation ="ghostFloat 1.5s linear infinite alternate-reverse";
-          },1);
+          setTimeout(function () {
+            player_sprite[0].style.animation = "ghostFloat 1.5s linear infinite alternate-reverse";
+          }, 1);
           //change database data
           playerRef.update({
-            hasShades : 1,
+            hasShades: 1,
             coins: players[playerId].coins - shadesCost,
           })
         }
@@ -442,7 +450,7 @@ function getRandomSafeSpot() {
         shades[0].classList.add("hidden");
         hasShades = 0;
         playerRef.update({
-          hasShades : 0,
+          hasShades: 0,
         })
       }
     })
