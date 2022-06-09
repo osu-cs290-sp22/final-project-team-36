@@ -133,6 +133,9 @@ function getRandomSafeSpot() {
   let playerElements = {};
   let coins = {};
   let coinElements = {};
+  //item stuff
+  const shadesCost = 2;
+  var hasShades = 0;
 
   const gameContainer = document.querySelector(".game-container");
   const playerNameInput = document.querySelector("#player-name");
@@ -140,7 +143,8 @@ function getRandomSafeSpot() {
   // Chat Input & Button
   const playerChatInput = document.querySelector("#player-chat-text");
   const playerChatButton = document.querySelector("#player-chat-button");
-
+  //costumization studd
+  const playerItemButton = document. querySelector("#player-item-button");
 
   function placeCoin() {
     const { x, y } = getRandomSafeSpot();
@@ -189,6 +193,8 @@ function getRandomSafeSpot() {
       if (xChange === -1) {
         players[playerId].direction = "left";
       }
+      //check for beaverstore positioning
+      
       playerRef.set(players[playerId]);
       attemptGrabCoin(newX, newY);
     }
@@ -238,7 +244,6 @@ function getRandomSafeSpot() {
       characterElement.innerHTML = (`
         <div class="Character_shadow grid-cell"></div>
         <div class="Character_sprite grid-cell"></div>
-        <div class="Character_shades_sprite grid-cell"></div>
         <div class="Character_name-container">
           <span class="Character_name"></span>
           <span class="Character_coins">0</span>
@@ -320,6 +325,27 @@ function getRandomSafeSpot() {
       playerRef.update({
         name: newName
       })
+    })
+
+    //update player item costumization
+    playerItemButton.addEventListener("click", () => {
+      var player_sprite = document.getElementsByClassName('Character_sprite');
+      var player = playerElements[playerId];
+      var oc = parseInt(player.querySelector('.Character_coins').innerText);
+      //toggle shades sprites
+      if(hasShades == 0) {
+        if(oc >= shadesCost) { //buy shades
+          player_sprite[0].style.background = "url(./images/shades.png)";
+          hasShades = 1;
+          //change player coin amount
+          playerRef.update({
+            coins: players[playerId].coins - shadesCost,
+          })
+        }
+      } else {
+        player_sprite[0].style.background = "url(./images/ghost.png)";
+        hasShades = 0;
+      }
     })
 
     //Update player chat bubble on button click

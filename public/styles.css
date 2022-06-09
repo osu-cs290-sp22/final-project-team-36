@@ -149,11 +149,11 @@ button:active {
   transform: scale(0.8);
 }
 /* character costumization stuff */
-.Character_hat_sprite {
-  display: block;
+/* .Character_hat_sprite {
+  display: none;
   overflow: hidden;
   top: -15px;
-  left: 1px;
+  left: -3px;
   width: 13px;
   height: 8px;
   background: url(./images/cap_sprite.png);
@@ -161,15 +161,15 @@ button:active {
 }
 
 .Character_shades_sprite {
-  display: block;
+  display: none;
   overflow: hidden;
   top: -9px;
-  left: 1px;
+  left: 0px;
   width: 10px;
   height: 10px;
   background: url(./images/shades.png);
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
-}
+} */
 
 .Character_name-container {
   position: absolute;
