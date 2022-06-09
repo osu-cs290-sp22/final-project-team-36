@@ -178,6 +178,10 @@ button:active {
 }
 
 /* Item classes */
+.nothing {
+  background: none no-repeat no-repeat;
+}
+
 .red_cube {
   background: url(./images/items/item_placeholder.png) no-repeat no-repeat;
 }
