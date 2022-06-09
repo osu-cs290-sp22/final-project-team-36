@@ -1,8 +1,9 @@
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -13,7 +14,7 @@ html, body {
   justify-content: center;
 }
 
-.game-container { 
+.game-container {
   position: relative;
   bottom: 100px;
   left: 75px;
@@ -27,37 +28,88 @@ html, body {
 .player-info {
   position: absolute;
   top: 0;
-  left:0;
+  left: 0;
   padding: 1em;
   display: flex;
   gap: 0.5em;
   align-items: flex-end
 }
+
 /* Player chat input styles */
 .player-chat {
   position: relative;
   top: 250px;
-  right: 200px;
-  width: 240px;
+  right: -200px;
+  width: 470px;
+  height: 220px;
   display: flex;
   gap: 0.5em;
-  align-items: flex-end
+  align-items: flex-end;
+  background-color: rgb(3,3,3,0.7);
+  opacity: 0.99;
+  border: 1px;
+  border-radius: 3px;
+  flex-wrap: wrap;
 }
+
+/* div containing chat messages */
+div#chat-box {
+  display:flex;
+  flex-wrap: wrap;
+  width: 450px;
+  height: 150px;
+  overflow-y: scroll;
+  flex-direction: row;
+  align-content: flex-start;
+}
+
+
+/* chat messages */
+.player-chat .chatbox-text {
+  color: white;
+  opacity: 1  ;
+  width:100%;
+  height: 20px;
+
+}
+
+/* to differentiate admin messages from regular chats */
+.player-chat .chatbox-text.admin-msg {
+  color: lightslategray;
+}
+
+div#player-input{
+  flex-wrap: nowrap;
+  display:flex;
+  width:100%
+}
+
 input#player-chat-text {
   outline: 0;
   padding-left: 0.5em;
   border: 3px solid #222034;
-  width: 300px;
+  width: 100%;
 }
+
+div#chat-button-container{
+  align-self: flex-end;
+}
+
+div#input-field-container{
+  width: 100%;
+}
+
+/* 
 button#player-chat-button {
   font-family: inherit;
   font-weight: bold;
   font-size: 18px;
   height: 44px;
-  width: 100px;
+  width: 20%;
   border-radius: 4px;
   outline: 0;
-}
+} */
+
 /* Player input style end */
 label {
   display: block;
@@ -81,6 +133,7 @@ input[type="text"] {
   width: 150px;
   /* text-transform: uppercase; */
 }
+
 input[type="text"]:focus {
   border-color: #f000ff;
 }
@@ -93,6 +146,7 @@ button {
   border-bottom: 2px solid #1e830b;
   cursor: pointer;
 }
+
 button:active {
   position: relative;
   top: 1px;
@@ -107,6 +161,7 @@ button:active {
   top: -2px;
   /* transform: scale(0.6); */
 }
+
 .Character {
   transition: transform 0.4s;
   image-rendering: pixelated;
@@ -114,21 +169,25 @@ button:active {
   left: -20px; */
   z-index: 1;
 }
+
 .Character.you {
   z-index: 1;
 }
+
 .Character.you .Character_you-arrow {
   display: block;
 }
+
 .Character_you-arrow {
   display: none;
   position: absolute;
-  top:-23px;
+  top: -23px;
   left: 5px;
   width: 7px;
   height: 5px;
   background: url(./images/arrow.png) no-repeat no-repeat;
 }
+
 .Character_sprite {
   overflow: hidden;
   top: -18px;
@@ -224,18 +283,31 @@ button:active {
   top: -5px;
   left: 0px;
 }
+
 .Coin_shadow {
   background: url(./images/coin-shadow.png) no-repeat no-repeat;
   top: -1px;
   left: 0px;
 }
+
 @keyframes coinFloat {
-  from { transform: scale(0.6) translateY(0) }
-  to { transform: scale(0.7) translateY(5px) }
+  from {
+    transform: scale(0.6) translateY(0)
+  }
+
+  to {
+    transform: scale(0.7) translateY(5px)
+  }
 }
+
 @keyframes ghostFloat {
-  from { transform: scale(0.7) translateY(0) }
-  to { transform: scale(0.7) translateY(5px) }
+  from {
+    transform: scale(0.7) translateY(0)
+  }
+
+  to {
+    transform: scale(0.7) translateY(5px)
+  }
 }
 
 
@@ -255,7 +327,8 @@ button:active {
   bottom: 25px;
   z-index: 2;
 }
-.bubble.you{
+
+.bubble.you {
   z-index: 3;
 }
 

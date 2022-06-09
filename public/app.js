@@ -269,6 +269,8 @@ function getRandomSafeSpot() {
       movementTimerStart = new Date();
     }
   }
+
+
   function initGame() {
 
     new KeyPressListener("ArrowUp", () => handleArrowPress(0, -1))
@@ -292,14 +294,17 @@ function getRandomSafeSpot() {
         el.setAttribute("data-direction", characterState.direction);
         el.querySelector(".Character_hand").classList.replace(el.querySelector(".Character_hand").classList.item(2), characterState.item);
         let chatBubble = el.querySelector("#chat-bubble");
-        if (characterState.chat_text === ""){
+        let chatBox = document.getElementById('chat-box')
+        if (characterState.chat_text === "") {
           chatBubble.style.display = "none";
         } else {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
+          addChat(characterState.name+ ":" +characterState.chat_text)
+          chatBox.scrollBy(0, 20)
         }
-        
+
         const left = 16 * characterState.x + "px";
         const top = 16 * characterState.y - 4 + "px";
         el.style.transform = `translate3d(${left}, ${top}, 0)`;
@@ -447,7 +452,7 @@ function getRandomSafeSpot() {
       sendChat();
     })
 
-    playerChatInput.addEventListener("keypress", function(event) {
+    playerChatInput.addEventListener("keypress", function (event) {
       // If the user presses the "Enter" key on the keyboard
       if (event.key === "Enter") {
         // Cancel the default action, if needed
@@ -460,13 +465,21 @@ function getRandomSafeSpot() {
     placeCoin();
 
   }
-  function sendChat(){
+  function sendChat() {
     playerRef.update({
       chat_text: playerChatInput.value
     })
     playerChatInput.value = "";
     //Start chat timeout
     startChat();
+  }
+
+  function addChat(text) {
+    var chatBox = document.getElementById('chat-box')
+    var newChat = document.createElement('p1')
+    newChat.className = 'chatbox-text'
+    newChat.textContent = text;
+    chatBox.appendChild(newChat)
   }
 
   firebase.auth().onAuthStateChanged((user) => {
