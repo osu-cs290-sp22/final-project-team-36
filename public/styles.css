@@ -275,8 +275,8 @@ button:active {
 .Character_hand {
   left: 4px;
   top: -5px;
-  width: 7.5px;
-  height: 7.5px;
+  width: 8px;
+  height: 8px;
   animation: ghostFloat 1.5s linear infinite alternate-reverse;
 }
 
