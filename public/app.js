@@ -216,12 +216,15 @@ function getRandomSafeSpot() {
         el.querySelector(".Character_coins").innerText = characterState.coins;
         el.setAttribute("data-direction", characterState.direction);
         let chatBubble = el.querySelector("#chat-bubble");
+        let chatBox = document.getElementById('chat-box')
         if (characterState.chat_text === "") {
           chatBubble.style.display = "none";
         } else {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
+          addChat(characterState.name+ ":" +characterState.chat_text)
+          chatBox.scrollBy(0, 20)
         }
 
         const left = 16 * characterState.x + "px";
@@ -350,8 +353,12 @@ function getRandomSafeSpot() {
     startChat();
   }
 
-  function addChat(text){
-    document.getElementById('chat-box')
+  function addChat(text) {
+    var chatBox = document.getElementById('chat-box')
+    var newChat = document.createElement('p1')
+    newChat.className = 'chatbox-text'
+    newChat.textContent = text;
+    chatBox.appendChild(newChat)
   }
 
   firebase.auth().onAuthStateChanged((user) => {

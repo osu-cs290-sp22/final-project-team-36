@@ -39,8 +39,9 @@ body {
 .player-chat {
   position: relative;
   top: 250px;
-  right: 50px;
-  width: 450px;
+  right: -200px;
+  width: 470px;
+  height: 220px;
   display: flex;
   gap: 0.5em;
   align-items: flex-end;
@@ -51,23 +52,24 @@ body {
   flex-wrap: wrap;
 }
 
+/* div containing chat messages */
 div#chat-box {
   display:flex;
   flex-wrap: wrap;
   width: 450px;
-
+  height: 150px;
+  overflow-y: scroll;
+  flex-direction: row;
+  align-content: flex-start;
 }
 
-.player-chat *{
-  opacity:1;
-}
 
+/* chat messages */
 .player-chat .chatbox-text {
-  position: flex;
-  border: 10px, 0px, 10px, 0px;
   color: white;
   opacity: 1  ;
   width:100%;
+  height: 20px;
 
 }
 
