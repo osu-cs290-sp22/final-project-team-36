@@ -1,3 +1,5 @@
+const { boolean } = require("webidl-conversions");
+
 var movementTimerStart = new Date();
 
 const mapData = {
@@ -179,9 +181,31 @@ function getRandomSafeSpot() {
     chatBox.appendChild(newChat)
   }
 
-// Clears chat after 8 seconds
+  function checkChat(text) {
+    var result = true
+    var chatBox = document.getElementById('chat-box')
+    var previousChat = chatBox.lastChild
+    var previousChatText = chatBox.lastChild.textContent
+
+    for (var i = 0; i < 4; i++) {
+      if (text == previousChatText) {
+        result = false;
+      }
+      else {
+        previousChat = previousChat.previousSibling
+        previousChatText = chatBox.lastChild.textContent
+
+        if (!previousChat) {// if there isn't a previous child, cuts for loop
+          break
+        }
+      }
+    }
+
+    return result
+  }
+
+  // Clears chat after 8 seconds
   function startChat() {
-    addChat(getTime() + " | " + players[playerId].name + " : " + players[playerId].chat_text);
     setTimeout(() => {
       playerRef.update({
         chat_text: ""
@@ -332,6 +356,11 @@ function getRandomSafeSpot() {
           // el.appendChild(getChatBubbleElement(characterState.chat_text));
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
+          var chatText = getTime() + characterState.name + " : " + characterState.chat_text
+          if (!(checkChat(chatText))) {
+            addChat(chatText)
+            chatBox.scrollBy(0, 20)
+          }
         }
 
         const left = 16 * characterState.x + "px";
