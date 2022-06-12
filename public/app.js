@@ -1,5 +1,3 @@
-
-
 var movementTimerStart = new Date();
 
 const mapData = {
