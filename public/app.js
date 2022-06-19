@@ -1,5 +1,3 @@
-const { boolean } = require("webidl-conversions");
-
 var movementTimerStart = new Date();
 
 const mapData = {
@@ -128,6 +126,13 @@ function getRandomSafeSpot() {
   ]);
 }
 
+function cleanChildren(node) {// cleans children of a node from random #text from html-styling
+  node.childNodes.forEach(function (x) {
+      if (x.nodeName == '#text') {
+          node.removeChild(x)
+      }
+  })
+}
 
 (function () {
   // Firebase variables
@@ -184,6 +189,7 @@ function getRandomSafeSpot() {
   function checkChat(text) {
     var result = true
     var chatBox = document.getElementById('chat-box')
+    cleanChildren(chatBox)
     var previousChat = chatBox.lastChild
     var previousChatText = chatBox.lastChild.textContent
 
@@ -193,11 +199,12 @@ function getRandomSafeSpot() {
       }
       else {
         previousChat = previousChat.previousSibling
-        previousChatText = chatBox.lastChild.textContent
-
         if (!previousChat) {// if there isn't a previous child, cuts for loop
           break
         }
+        previousChatText = previousChat.textContent
+
+        
       }
     }
 
@@ -357,7 +364,7 @@ function getRandomSafeSpot() {
           chatBubble.style.display = "block";
           chatBubble.innerText = characterState.chat_text;
           var chatText = getTime() + characterState.name + " : " + characterState.chat_text
-          if (!(checkChat(chatText))) {
+          if (checkChat(chatText)) {
             addChat(chatText)
             chatBox.scrollBy(0, 20)
           }
