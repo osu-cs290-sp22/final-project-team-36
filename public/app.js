@@ -1,5 +1,3 @@
-const { boolean } = require("webidl-conversions");
-
 var movementTimerStart = new Date();
 
 const mapData = {
