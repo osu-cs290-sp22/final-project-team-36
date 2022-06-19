@@ -193,7 +193,7 @@ function cleanChildren(node) {// cleans children of a node from random #text fro
     var previousChat = chatBox.lastChild
     var previousChatText = chatBox.lastChild.textContent
 
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 100; i++) {
       if (text == previousChatText) {
         result = false;
       }
