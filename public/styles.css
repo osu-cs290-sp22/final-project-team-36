@@ -38,7 +38,7 @@ body {
 /* Player chat input styles */
 .player-chat {
   position: relative;
-  top: 250px;
+  top: 240px;
   right: -200px;
   width: 470px;
   height: 220px;
